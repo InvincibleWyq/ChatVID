@@ -1,0 +1,16 @@
+device: 'cpu'
+video_path: '/nvme/wangyiqin/vid_cap/VideoChat/examples/'
+video_name: 'cook_720p.mp4'
+fps: 120
+
+vicuna:
+  model_path: '/nvme/wangyiqin/vid_cap/vicuna-13b'
+  device: 'cpu'
+  num_gpus: 1
+  max_gpu_memory: '40Gib'
+  load_8bit: False
+  conv_template: 
+  temperature: 0.9
+  max_new_tokens: 512
+  debug: False
+  output_path: '/nvme/wangyiqin/vid_cap/VideoChat/examples/test.json'
