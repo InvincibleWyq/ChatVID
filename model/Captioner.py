@@ -25,12 +25,18 @@ class Captioner:
     def caption_frames(self, video_src, video_name, fps=30):
         """ Caption all frames in the folder
         """
+        print("Captioning frames...")
+        if video_src[-4:] == '.mp4':
+            print("video_src is a video file")
+            video_name = video_src.split('/')[-1]
+            video_src = video_src[:-len(video_name)]
         self._get_frames(video_src, video_name, fps)
         frame_folder = self.src_dir + 'frames'
         
         # get frame paths in the folder and sort them
         frame_paths = [os.path.join(frame_folder, f) for f in os.listdir(frame_folder)]
-        frame_paths.sort()
+        # sort in numerical order
+        frame_paths.sort(key=lambda x: int(x.split('/')[-1].split('.')[0]))
         
         # caption each frame
         captions = {}
@@ -38,6 +44,7 @@ class Captioner:
             caption = self._caption_frame(frame_path)
             captions[frame_path] = caption
         
+        print("Captions generated")
         return captions  
     
     def _get_frames(self, video_src, video_name, fps=30):

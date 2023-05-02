@@ -1,6 +1,5 @@
 import argparse
 from model import Captioner, VicunaHandler
-from utils.util import display_images_and_text
 import os
 import json
 from config.config_utils import get_config
@@ -18,7 +17,6 @@ if __name__ == '__main__':
     with open('./test.json', 'w') as f:
         json.dump(prompted_captions, f)
     
-    prompted_captions = json.load(open('./test.json'))
     handler = VicunaHandler(config['vicuna'])
     handler.summarise_caption(prompted_captions)
     

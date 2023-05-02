@@ -396,6 +396,8 @@ def question_loop(
             print("\n", {"prompt": prompt, "outputs": outputs}, "\n")
     with open(output_path, 'w') as f:
         json.dump(captions, f)
+    print(captions)
+    return captions
 
 def get_test(file_path):
     data_info = dict()

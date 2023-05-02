@@ -32,7 +32,7 @@ class VicunaHandler:
     def summarise_caption(self, caption):
         """ Summarise the caption to paragraph.
         """
-        question_loop(
+        return question_loop(
             self.config['model_path'], 
             self.config['device'], 
             self.config['num_gpus'],
