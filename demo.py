@@ -22,6 +22,10 @@ def respond(input, chat_history):
     chat_history.append((input, bot_response))
     time.sleep(0.1)
     return "", chat_history
+
+def clear_chat(chat_history):
+    handler.chatbot.clear_conv()
+    return "", []
     
 
 if __name__ == '__main__':
@@ -98,7 +102,9 @@ if __name__ == '__main__':
         )
         
         txt.submit(respond, inputs=[txt, chatbot], outputs=[txt,chatbot])
-        clear_button.click(lambda: None, None, chatbot, queue=False)
+        run_button.click(respond, inputs=[txt, chatbot], outputs=[txt,chatbot])
+        clear_button.click(clear_chat, inputs=[chatbot], outputs=[txt,chatbot])
+        # clear_button.click(lambda: None, None, chatbot, queue=False)
         
         
         
