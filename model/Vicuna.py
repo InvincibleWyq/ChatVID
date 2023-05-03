@@ -1,7 +1,12 @@
-from model.fastchat.serve.inference import ChatIO, question_loop, answer_loop, chat_loop
-from model.fastchat.conversation import Conversation, SeparatorStyle
+from model.fastchat.serve.inference import ChatIO, question_loop, answer_loop, chat_loop, load_model, generate_stream
 import json, os
-
+from model.fastchat.conversation import (
+    conv_templates,
+    get_default_conv_template,
+    compute_skip_echo_len,
+    SeparatorStyle,
+    Conversation,
+)
 
 class SimpleChatIO(ChatIO):
     def prompt_for_input(self, role) -> str:
@@ -22,16 +27,141 @@ class SimpleChatIO(ChatIO):
         print(" ".join(outputs[pre:]), flush=True)
         return " ".join(outputs)
     
+
+class VicunaChatBot:
+    def __init__(
+        self,
+        model_path: str,
+        device: str,
+        num_gpus: str,
+        max_gpu_memory: str,
+        load_8bit: bool,
+        conv_template,
+        ChatIO: ChatIO,
+        debug: bool,
+    ):
+        self.model_path = model_path
+        self.device = device
+        self.chatio = ChatIO
+        self.model, self.tokenizer = load_model(
+            self.model_path, device, num_gpus, max_gpu_memory, load_8bit, debug
+        )
+        
+        if conv_template:
+            self.conv = conv_template.copy()
+            self.conv_template = conv_template.copy() 
+        else:
+            self.conv = get_default_conv_template(model_path).copy()
+    def chat(self, inp: str, temperature: float, max_new_tokens: int):
+        self.conv.append_message(self.conv.roles[0], inp)
+        self.conv.append_message(self.conv.roles[1], None)
+        
+        generate_stream_func = generate_stream
+        prompt = self.conv.get_prompt()
+        
+        skip_echo_len = compute_skip_echo_len(self.model_path, self.conv, prompt)
+        stop_str = (
+            self.conv.sep
+            if self.conv.sep_style in [SeparatorStyle.SINGLE, SeparatorStyle.BAIZE]
+            else None
+        )
+        params = {
+            "model": self.model_path,
+            "prompt": prompt,
+            "temperature": temperature,
+            "max_new_tokens": max_new_tokens,
+            "stop": stop_str,
+        }
+        print(prompt)
+        self.chatio.prompt_for_output(self.conv.roles[1])
+        output_stream = generate_stream_func(self.model, self.tokenizer, params, self.device)
+        outputs = self.chatio.stream_output(output_stream, skip_echo_len)
+        # NOTE: strip is important to align with the training data.
+        self.conv.messages[-1][-1] = outputs.strip()
+        return outputs
+    
+    def clear_conv(self):
+        self.conv = self.conv_template.copy()
+        
+    def change_conv(self, conv_template):
+        self.conv = conv_template.copy()
+        
+
+def chat_loop(
+    model_path: str,
+    device: str,
+    num_gpus: str,
+    max_gpu_memory: str,
+    load_8bit: bool,
+    conv_template,
+    temperature: float,
+    max_new_tokens: int,
+    chatio: ChatIO,
+    debug: bool,
+):
+    # Model
+    model, tokenizer = load_model(
+        model_path, device, num_gpus, max_gpu_memory, load_8bit, debug
+    )
+    is_chatglm = "chatglm" in str(type(model)).lower()
+
+    # Chat
+    if conv_template:
+        conv = conv_template.copy() 
+    else:
+        conv = get_default_conv_template(model_path).copy()
+
+    while True:
+        try:
+            inp = chatio.prompt_for_input(conv.roles[0])
+        except EOFError:
+            inp = ""
+        if not inp:
+            print("exit...")
+            break
+
+        conv.append_message(conv.roles[0], inp)
+        conv.append_message(conv.roles[1], None)
+
+        generate_stream_func = generate_stream
+        prompt = conv.get_prompt()
+
+        
+        skip_echo_len = compute_skip_echo_len(model_path, conv, prompt)
+        stop_str = (
+            conv.sep
+            if conv.sep_style in [SeparatorStyle.SINGLE, SeparatorStyle.BAIZE]
+            else None
+        )
+
+        params = {
+            "model": model_path,
+            "prompt": prompt,
+            "temperature": temperature,
+            "max_new_tokens": max_new_tokens,
+            "stop": stop_str,
+        }
+
+        chatio.prompt_for_output(conv.roles[1])
+        output_stream = generate_stream_func(model, tokenizer, params, device)
+        outputs = chatio.stream_output(output_stream, skip_echo_len)
+        # NOTE: strip is important to align with the training data.
+        conv.messages[-1][-1] = outputs.strip()
+        if debug:
+            print("\n", {"prompt": prompt, "outputs": outputs}, "\n")
+    
 class VicunaHandler:
     """ VicunaHandler is a class that handles the communication between the frontend and the backend.
     """
     def __init__(self, config):
         self.config = config
         self.chat_io = SimpleChatIO()
+        self.chatbot = None
         
     def summarise_caption(self, caption):
         """ Summarise the caption to paragraph.
         """
+        
         return question_loop(
             self.config['model_path'], 
             self.config['device'], 
@@ -65,8 +195,36 @@ class VicunaHandler:
             self.config['debug'],
         )
     
-    def _construct_conversation(self, prompt):
+    def gr_chatbot_init(self, caption: dict):
+        """ Initialise the chatbot for gradio.
+        """
+        prompt = self._get_prompt(caption)
+        template = self._construct_conversation(prompt)
+        self.chatbot = VicunaChatBot(
+            self.config['model_path'], 
+            self.config['device'], 
+            self.config['num_gpus'],
+            self.config['max_gpu_memory'],
+            self.config['load_8bit'],
+            template,
+            self.chat_io,
+            self.config['debug'],
+        )
+        print("Chatbot initialised.")
+    
+    def gr_chat(self, inp):
+        """ Chat using gradio as the frontend.
+        """
+        return self.chatbot.chat(inp, self.config['temperature'], self.config['max_new_tokens'])
         
+        
+    
+    def _construct_conversation(self, prompt):
+        """ Construct a conversation template.
+            
+        Args:
+            prompt: the prompt for the conversation.
+        """
         return Conversation(
             system="A chat between a curious user and an artificial intelligence assistant. "
             "The assistant gives helpful, detailed, and polite answers to the user's questions.",
@@ -78,22 +236,19 @@ class VicunaHandler:
             sep2="</s>",
         )
     
-    def _get_prompt(self):
-        caption = dict()
-        with open(self.config['output_path'], 'r') as f:
-            caption = json.load(f)
+    def _get_prompt(self, caption: dict = None):
+        """ Get the prompt for the conversation.
+        
+        """
+        if caption is None:
+            # Load the caption from the output path.
+            print("Loading the caption from the output path.")
+            caption = dict()
+            with open(self.config['output_path'], 'r') as f:
+                caption = json.load(f)
         captions = ""
         for it, v in enumerate(caption.values()):
             captions += "Caption" + str(it)+ ": " + v + "\n"
-        prompt = "Answer the questions below based on the given video captions in time order. Imagine people's action based on simple words in caption(Caption0: ...).\n----\n" + captions + "\n----\nAnswer with 'yes' or 'no' only for each question.\n----\n Example: Is there a person?"
-        # random print 20 questions and answers
-        # random_ids = random.sample(list(data_info[video_name]['questions'].keys()), 10)
-        # for ix ,id in enumerate(random_ids):
-        #     print(str(ix)+'. '+data_info[video_name]['questions'][id])
-        #     prompt += 'Question' + str(ix) + ': ' + data_info[video_name]['questions'][id] + '\n'
+        prompt = "Answer the questions based on the given video captions in time order. Imagine the video based on simple words in caption.\n----\n" + captions + "\n----\n\n----\n Example: Is there a person?"
 
-        # answer = {}
-        # for ix, id in enumerate(random_ids):
-        #     print(str(ix)+'. '+data_info[video_name]['answers'][id])
-        #     answer[str(ix)] = data_info[video_name]['answers'][id]
         return prompt

@@ -1,9 +1,8 @@
 import argparse
 from model import Captioner, VicunaHandler
-import os
-import json
 from config.config_utils import get_config
 import gradio as gr
+import time
 
 
 
@@ -18,6 +17,12 @@ def upload_video(video):
     print(video)
     return video
 
+def respond(input, chat_history):
+    bot_response = handler.gr_chat(input)
+    chat_history.append((input, bot_response))
+    time.sleep(0.1)
+    return "", chat_history
+    
 
 if __name__ == '__main__':
     _argparser = argparse.ArgumentParser()
@@ -30,7 +35,7 @@ if __name__ == '__main__':
     
     # with open('./test.json', 'w') as f:
     #     json.dump(prompted_captions, f)
-    
+    global handler
     handler = VicunaHandler(config['vicuna'])
     
         
@@ -60,22 +65,44 @@ if __name__ == '__main__':
                 with gr.Row(visible=False) as input:
                     with gr.Column(scale=0.7):
                         txt = gr.Textbox(show_label=False, placeholder="Enter text and press enter").style(container=False)
-                    with gr.Column(scale=0.1, min_width=0):
+                    with gr.Column(scale=0.15, min_width=0):
                         run_button = gr.Button("RUN!")
-                    with gr.Column(scale=0.1, min_width=0):
+                    with gr.Column(scale=0.15, min_width=0):
                         clear_button = gr.Button("CLEAR")
         # with gr.Row():
             # example_videos = gr.Dataset(components=[video_path], samples=[['examples/temple_of_heaven_720p.mp4']])
             
         # example_videos.click(fn=set_example_video, inputs=example_videos, outputs=example_videos.components)
-        upload_button.click(lambda: gr.update(interactive=True), None, chat_button)
-        upload_button.click(lambda: [], None, chatbot)
+        # upload_button.click(lambda: gr.update(interactive=True), None, chat_button)
+        # upload_button.click(lambda: [], None, chatbot)
         # upload.upload(upload_file, upload, file_output)
         
-        upload_button.click(upload_video, [video_path], None)
-        upload_button.click(captioner.caption_frames, [video_path, video_name, fps], [prompted_captions])
+        # upload_button.click(
+        #     upload_video, [video_path], None
+        # )
         
-        chat_button.click(handler.summarise_caption, [prompted_captions], [summarised_caption])
+        upload_button.click(
+            captioner.caption_frames, [video_path, video_name, fps], [prompted_captions]
+        ).then(
+            lambda: gr.update(interactive=True), None, chat_button
+        ).then(
+            lambda: [], None, chatbot
+        )
+        
+        chat_button.click(
+            handler.summarise_caption, [prompted_captions], [summarised_caption]
+        ).then(
+            handler.gr_chatbot_init, [summarised_caption], None
+        ).then(
+            lambda: gr.update(visible=True), None, input
+        )
+        
+        txt.submit(respond, inputs=[txt, chatbot], outputs=[txt,chatbot])
+        clear_button.click(lambda: None, None, chatbot, queue=False)
+        
+        
+        
+        
         
 
     demo.launch(share=True)

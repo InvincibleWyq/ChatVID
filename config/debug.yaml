@@ -1,11 +1,11 @@
-device: 'cpu'
+device: 'cuda'
 video_path: '/nvme/wangyiqin/vid_cap/VideoChat/examples/'
 video_name: 'cook_720p.mp4'
 fps: 120
 
 vicuna:
   model_path: '/nvme/wangyiqin/vid_cap/vicuna-13b'
-  device: 'cpu'
+  device: 'cuda'
   num_gpus: 1
   max_gpu_memory: '40Gib'
   load_8bit: False
