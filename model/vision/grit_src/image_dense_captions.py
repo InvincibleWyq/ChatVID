@@ -7,7 +7,7 @@ import tqdm
 import sys
 
 from detectron2.config import get_cfg
-from detectron2.data.detection_utils import read_image
+from detectron2.data.detection_utils import read_image, _apply_exif_orientation, convert_PIL_to_numpy
 from detectron2.utils.logger import setup_logger
 
 sys.path.insert(0, 'model/vision/grit_src/third_party/CenterNet2/projects/CenterNet2/')
@@ -57,11 +57,17 @@ def get_parser(device):
         arg_dict["cpu"] = True
     return arg_dict
 
-def image_caption_api(image_src, device):
+def image_caption_api(image_src, device, image=None):
     args2 = get_parser(device)
     cfg = setup_cfg(args2)
     demo = VisualizationDemo(cfg)
-    if image_src:
+    if image: # from PIL.Image
+        img = _apply_exif_orientation(image)
+        img = convert_PIL_to_numpy(img, format="BGR")
+        img = resize_long_edge_cv2(img, 384)
+        predictions, visualized_output = demo.run_on_image(img)
+        new_caption = dense_pred_to_caption(predictions)
+    else:
         img = read_image(image_src, format="BGR")
         img = resize_long_edge_cv2(img, 384)
         predictions, visualized_output = demo.run_on_image(img)

@@ -30,24 +30,24 @@ class Captioner:
             print("video_src is a video file")
             video_name = video_src.split('/')[-1]
             video_src = video_src[:-len(video_name)]
-        self._get_frames(video_src, video_name, fps)
-        frame_folder = self.src_dir + 'frames'
+        frame_list = self._get_frames(video_src, video_name, fps)
+        # frame_folder = self.src_dir + 'frames'
         
         # get frame paths in the folder and sort them
-        frame_paths = [os.path.join(frame_folder, f) for f in os.listdir(frame_folder)]
+        # frame_paths = [os.path.join(frame_folder, f) for f in os.listdir(frame_folder)]
         # sort in numerical order
-        frame_paths.sort(key=lambda x: int(x.split('/')[-1].split('.')[0]))
+        # frame_paths.sort(key=lambda x: int(x.split('/')[-1].split('.')[0]))
         
         # caption each frame
         captions = {}
-        for frame_path in frame_paths:
-            caption = self._caption_frame(frame_path)
-            captions[frame_path] = caption
+        for it, frame in enumerate(frame_list):
+            caption = self._caption_frame(frame)
+            captions[it] = caption
         
         print("Captions generated")
         return captions  
     
-    def _get_frames(self, video_src, video_name, fps=30):
+    def _get_frames(self, video_src, video_name, fps=30, save=False):
         """ Get frames from a video
         
         Args:
@@ -62,26 +62,33 @@ class Captioner:
         frames = []
         for frame in container.decode(video=0):
             if frame.index % fps == 0:
-                frames.append(frame.to_image())
+                frames.append(frame.to_image()) # av.VideoFrame to PIL.Image
         # save frames to folder
-        if not os.path.exists(self.src_dir + '/frames'):
-            os.mkdir(self.src_dir + '/frames')
-        for i, frame in enumerate(frames):
-            frame.save(self.src_dir + '/frames' +f'/{i}.jpg')
+        if save:
+            if not os.path.exists(self.src_dir + '/frames'):
+                os.mkdir(self.src_dir + '/frames')
+            for i, frame in enumerate(frames):
+                frame.save(self.src_dir + '/frames' +f'/{i}.jpg')
         return frames
   
         
-        
-        
-    def _caption_frame(self, image_src):
-        """ Caption a frame
+    def _caption_frame(self, image):
+        """ Caption a frame from PIL.Image
+        """
+        width, height = image.size
+        image_caption = self.image_captioner.caption_image(image=image)
+        dense_caption = self.dense_captioner.image_dense_caption(image_src=None, image=image)
+        prompt = self.prompter.generate_prompt(image_caption, dense_caption, width, height)
+        return prompt
+    def _caption_frame_from_path(self, image_src):
+        """ Caption a frame from image path
         
         Args:
             image_src: path to the image
         
         """
         width, height = read_image_width_height(image_src)
-        image_caption = self.image_captioner.caption_image(image_src=image_src)
+        image_caption = self.image_captioner.caption_image(image_src=image_src, image=None)
         dense_caption = self.dense_captioner.image_dense_caption(image_src)
         prompt = self.prompter.generate_prompt(image_caption, dense_caption, width, height)
         return prompt

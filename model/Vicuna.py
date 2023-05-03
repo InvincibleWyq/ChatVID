@@ -43,16 +43,23 @@ class VicunaChatBot:
         self.model_path = model_path
         self.device = device
         self.chatio = ChatIO
+        self.debug = debug
+        
+        
         self.model, self.tokenizer = load_model(
             self.model_path, device, num_gpus, max_gpu_memory, load_8bit, debug
         )
         
         if conv_template:
             self.conv = conv_template.copy()
-            self.conv_template = conv_template.copy() 
         else:
             self.conv = get_default_conv_template(model_path).copy()
+        
+        self.conv_template = self.conv.copy()
+            
     def chat(self, inp: str, temperature: float, max_new_tokens: int):
+        """Vicuna as a chatbot.
+        """
         self.conv.append_message(self.conv.roles[0], inp)
         self.conv.append_message(self.conv.roles[1], None)
         
@@ -80,10 +87,54 @@ class VicunaChatBot:
         self.conv.messages[-1][-1] = outputs.strip()
         return outputs
     
+    def summarise(self, caption: dict, temperature: float, max_new_tokens: int):
+        """ Vicuna as a summariser.
+        """
+        questions = caption
+        captions = {}
+        for id,question in questions.items():
+            # Reset the conversation for each iteration
+            self.conv = get_default_conv_template(self.model_path).copy()
+            self.conv.append_message(self.conv.roles[0], question)
+            self.conv.append_message(self.conv.roles[1], None)
+
+            generate_stream_func = generate_stream
+            prompt = self.conv.get_prompt()
+
+            skip_echo_len = compute_skip_echo_len(self.model_path, self.conv, prompt)
+            stop_str = (
+                self.conv.sep
+                if self.conv.sep_style in [SeparatorStyle.SINGLE, SeparatorStyle.BAIZE]
+                else None
+            )
+
+            params = {
+                "model": self.model_path,
+                "prompt": prompt,
+                "temperature": temperature,
+                "max_new_tokens": max_new_tokens,
+                "stop": stop_str,
+            }
+
+            self.chatio.prompt_for_output(self.conv.roles[1])
+            output_stream = generate_stream_func(self.model, self.tokenizer, params, self.device)
+            outputs = self.chatio.stream_output(output_stream, skip_echo_len)
+            captions[id] = outputs
+            
+            if self.debug:
+                print("\n", {"prompt": prompt, "outputs": outputs}, "\n")
+
+        print(captions)
+        return captions
+    
     def clear_conv(self):
+        """ Clear the conversation.
+        """
         self.conv = self.conv_template.copy()
         
     def change_conv(self, conv_template):
+        """ Change the conversation.
+        """
         self.conv = conv_template.copy()
         
 
@@ -156,30 +207,41 @@ class VicunaHandler:
     def __init__(self, config):
         self.config = config
         self.chat_io = SimpleChatIO()
-        self.chatbot = None
-        
-    def summarise_caption(self, caption):
-        """ Summarise the caption to paragraph.
-        """
-        
-        return question_loop(
+        self.chatbot = VicunaChatBot(
             self.config['model_path'], 
             self.config['device'], 
             self.config['num_gpus'],
             self.config['max_gpu_memory'],
             self.config['load_8bit'],
-            self.config['conv_template'],
-            self.config['temperature'],
-            self.config['max_new_tokens'],
+            None,
             self.chat_io,
             self.config['debug'],
-            prompt_caption=caption,
-            output_path=self.config['output_path'],
         )
+        
+    def summarise_caption(self, caption):
+        """ Summarise the caption to paragraph.
+        """
+        self.chatbot.clear_conv()
+        return self.chatbot.summarise(caption, self.config['temperature'], self.config['max_new_tokens'])
+        # return question_loop(
+        #     self.config['model_path'], 
+        #     self.config['device'], 
+        #     self.config['num_gpus'],
+        #     self.config['max_gpu_memory'],
+        #     self.config['load_8bit'],
+        #     self.config['conv_template'],
+        #     self.config['temperature'],
+        #     self.config['max_new_tokens'],
+        #     self.chat_io,
+        #     self.config['debug'],
+        #     prompt_caption=caption,
+        #     output_path=self.config['output_path'],
+        # )
         
     def chat(self):
         """ Chat with the Vicuna.
         """
+        
         prompt = self._get_prompt()
         template = self._construct_conversation(prompt)
         chat_loop(
@@ -200,16 +262,7 @@ class VicunaHandler:
         """
         prompt = self._get_prompt(caption)
         template = self._construct_conversation(prompt)
-        self.chatbot = VicunaChatBot(
-            self.config['model_path'], 
-            self.config['device'], 
-            self.config['num_gpus'],
-            self.config['max_gpu_memory'],
-            self.config['load_8bit'],
-            template,
-            self.chat_io,
-            self.config['debug'],
-        )
+        self.chatbot.change_conv(template)
         print("Chatbot initialised.")
     
     def gr_chat(self, inp):
@@ -249,6 +302,6 @@ class VicunaHandler:
         captions = ""
         for it, v in enumerate(caption.values()):
             captions += "Caption" + str(it)+ ": " + v + "\n"
-        prompt = "Answer the questions based on the given video captions in time order. Imagine the video based on simple words in caption.\n----\n" + captions + "\n----\n\n----\n Example: Is there a person?"
+        prompt = "Answer the questions based on the given video captions in time order. Imagine the video based on simple words in caption.\n----\n" + captions + "\n----\n Example: Is there a person in the video?"
 
         return prompt
