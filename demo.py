@@ -104,8 +104,8 @@ if __name__ == '__main__':
                               handler.gr_chatbot_init,
                               [summarised_caption, speech],
                               None).then(lambda: gr.update(visible=True), None,
-                                         input)
-        # temp_button.click(respond, inputs=[hard_coded_question, chatbot], outputs=[txt, chatbot])
+                                         input).then(respond, inputs=[hard_coded_question, chatbot], outputs=[txt, chatbot])
+        temp_button.click(respond, inputs=[hard_coded_question, chatbot], outputs=[txt, chatbot])
         txt.submit(respond, inputs=[txt, chatbot], outputs=[txt, chatbot])
         run_button.click(
             respond, inputs=[txt, chatbot], outputs=[txt, chatbot])
