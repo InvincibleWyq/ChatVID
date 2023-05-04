@@ -127,12 +127,12 @@ class VicunaChatBot:
         print(captions)
         return captions
     
-    def clear_conv(self):
+    def clear_conv_(self):
         """ Clear the conversation.
         """
         self.conv = self.conv_template.copy()
         
-    def change_conv(self, conv_template):
+    def change_conv_(self, conv_template):
         """ Change the conversation.
         """
         self.conv = conv_template.copy()
@@ -221,7 +221,7 @@ class VicunaHandler:
     def summarise_caption(self, caption):
         """ Summarise the caption to paragraph.
         """
-        self.chatbot.clear_conv()
+        self.chatbot.clear_conv_()
         return self.chatbot.summarise(caption, self.config['temperature'], self.config['max_new_tokens'])
         # return question_loop(
         #     self.config['model_path'], 
@@ -262,7 +262,7 @@ class VicunaHandler:
         """
         prompt = self._get_prompt(caption)
         template = self._construct_conversation(prompt)
-        self.chatbot.change_conv(template)
+        self.chatbot.change_conv_(template)
         print("Chatbot initialised.")
     
     def gr_chat(self, inp):
@@ -302,6 +302,6 @@ class VicunaHandler:
         captions = ""
         for it, v in enumerate(caption.values()):
             captions += "Caption" + str(it)+ ": " + v + "\n"
-        prompt = "Answer the questions based on the given video captions in time order. Imagine the video based on simple words in caption.\n----\n" + captions + "\n----\n Example: Is there a person in the video?"
+        prompt = "Answer the questions based on the given video captions in time order. Imagine the video based on simple words in caption.\n----\n" + captions + "\n----\n Example: Is this a Video?"
 
         return prompt

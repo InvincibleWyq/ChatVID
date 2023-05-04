@@ -24,7 +24,8 @@ def respond(input, chat_history):
     return "", chat_history
 
 def clear_chat(chat_history):
-    handler.chatbot.clear_conv()
+    handler.chatbot.clear_conv_()
+    
     return "", []
     
 
@@ -57,7 +58,7 @@ if __name__ == '__main__':
                 # file_output = gr.File()
                 with gr.Column():
                     # upload = gr.UploadButton("TEST")
-                    upload_button = gr.Button("Upload Video")
+                    upload_button = gr.Button("Begin Upload")
                     chat_button = gr.Button("Let's Chat!", interactive=False)
                     fps = gr.Slider(minimum=120, maximum=720, step=1, label="FPS")
                     
