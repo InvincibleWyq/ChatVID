@@ -1,6 +1,5 @@
 import argparse
 from model import Captioner, VicunaHandler
-import os
 import json
 from config.config_utils import get_config
 

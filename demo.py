@@ -99,5 +99,3 @@ if __name__ == '__main__':
             clear_chat, inputs=[chatbot], outputs=[txt, chatbot])
 
     demo.launch(share=True)
-
-    # handler.chat()

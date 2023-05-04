@@ -1,6 +1,5 @@
 from PIL import Image
-import requests
-from transformers import Blip2Processor, Blip2ForConditionalGeneration, BlipProcessor, BlipForConditionalGeneration
+from transformers import Blip2Processor, Blip2ForConditionalGeneration
 import torch
 from utils.util import resize_long_edge
 

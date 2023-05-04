@@ -1,7 +1,6 @@
-from model.fastchat.serve.inference import ChatIO, question_loop, answer_loop, chat_loop, load_model, generate_stream
-import json, os
+from model.fastchat.serve.inference import (ChatIO, chat_loop, load_model,
+                                            generate_stream)
 from model.fastchat.conversation import (
-    conv_templates,
     get_default_conv_template,
     compute_skip_echo_len,
     SeparatorStyle,
@@ -60,8 +59,7 @@ class VicunaChatBot:
         self.conv_template = self.conv.copy()
 
     def chat(self, inp: str, temperature: float, max_new_tokens: int):
-        """Vicuna as a chatbot.
-        """
+        """ Vicuna as a chatbot. """
         self.conv.append_message(self.conv.roles[0], inp)
         self.conv.append_message(self.conv.roles[1], None)
 
@@ -91,8 +89,7 @@ class VicunaChatBot:
 
     def summarise(self, caption: dict, temperature: float,
                   max_new_tokens: int):
-        """ Vicuna as a summariser.
-        """
+        """ Vicuna as a summariser. """
         questions = caption
         captions = {}
         for id, question in questions.items():
@@ -131,8 +128,7 @@ class VicunaChatBot:
         return captions
 
     def clear_conv_(self):
-        """ Clear the conversation.
-        """
+        """ Clear the conversation. """
         self.conv = self.conv_template.copy()
 
     def change_conv_template_(self, conv_template):
@@ -140,8 +136,7 @@ class VicunaChatBot:
         self.conv = conv_template.copy()
 
     def change_conv_(self, conv_template):
-        """ Change the conversation.
-        """
+        """ Change the conversation. """
         self.conv = conv_template.copy()
 
 
@@ -160,7 +155,6 @@ def chat_loop(
     # Model
     model, tokenizer = load_model(model_path, device, num_gpus, max_gpu_memory,
                                   load_8bit, debug)
-    is_chatglm = "chatglm" in str(type(model)).lower()
 
     # Chat
     if conv_template:
@@ -206,8 +200,8 @@ def chat_loop(
 
 
 class VicunaHandler:
-    """ VicunaHandler is a class that handles the communication between the frontend and the backend.
-    """
+    """ VicunaHandler is a class that handles the communication between the
+    frontend and the backend. """
 
     def __init__(self, config):
         self.config = config
@@ -224,8 +218,7 @@ class VicunaHandler:
         )
 
     def chat(self):
-        """ Chat with the Vicuna.
-        """
+        """ Chat with the Vicuna. """
         template = self._construct_conversation("")
         chat_loop(
             self.config['model_path'],
@@ -241,21 +234,18 @@ class VicunaHandler:
         )
 
     def gr_chatbot_init(self, caption: str):
-        """ Initialise the chatbot for gradio.
-        """
+        """ Initialise the chatbot for gradio. """
         template = self._construct_conversation(caption)
         self.chatbot.change_conv_template_(template)
         print("Chatbot initialised.")
 
     def gr_chat(self, inp):
-        """ Chat using gradio as the frontend.
-        """
+        """ Chat using gradio as the frontend. """
         return self.chatbot.chat(inp, self.config['temperature'],
                                  self.config['max_new_tokens'])
 
     def _construct_conversation(self, prompt):
         """ Construct a conversation template.
-            
         Args:
             prompt: the prompt for the conversation.
         """
