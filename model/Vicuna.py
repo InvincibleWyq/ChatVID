@@ -129,7 +129,6 @@ class VicunaChatBot:
 
         print(captions)
         return captions
-    
 
     def clear_conv_(self):
         """ Clear the conversation.
@@ -139,8 +138,7 @@ class VicunaChatBot:
     def change_conv_template_(self, conv_template):
         self.conv_template = conv_template.copy()
         self.conv = conv_template.copy()
-        
-        
+
     def change_conv_(self, conv_template):
         """ Change the conversation.
         """
@@ -225,33 +223,10 @@ class VicunaHandler:
             self.config['debug'],
         )
 
-    def summarise_caption(self, caption):
-        """ Summarise the caption to paragraph.
-        """
-        self.chatbot.clear_conv_()
-        return self.chatbot.summarise(caption, self.config['temperature'],
-                                      self.config['max_new_tokens'])
-        # return question_loop(
-        #     self.config['model_path'],
-        #     self.config['device'],
-        #     self.config['num_gpus'],
-        #     self.config['max_gpu_memory'],
-        #     self.config['load_8bit'],
-        #     self.config['conv_template'],
-        #     self.config['temperature'],
-        #     self.config['max_new_tokens'],
-        #     self.chat_io,
-        #     self.config['debug'],
-        #     prompt_caption=caption,
-        #     output_path=self.config['output_path'],
-        # )
-
     def chat(self):
         """ Chat with the Vicuna.
         """
-
-        prompt = self._get_prompt()
-        template = self._construct_conversation(prompt)
+        template = self._construct_conversation("")
         chat_loop(
             self.config['model_path'],
             self.config['device'],
@@ -265,11 +240,10 @@ class VicunaHandler:
             self.config['debug'],
         )
 
-    def gr_chatbot_init(self, caption: dict, speech: str):
+    def gr_chatbot_init(self, caption: str):
         """ Initialise the chatbot for gradio.
         """
-        prompt = self._get_prompt(caption, speech)
-        template = self._construct_conversation(prompt)
+        template = self._construct_conversation(caption)
         self.chatbot.change_conv_template_(template)
         print("Chatbot initialised.")
 
@@ -287,45 +261,13 @@ class VicunaHandler:
         """
         return Conversation(
             system=
-            "A chat between a curious user and an artificial intelligence assistant answering quetions on videos."
-            "The assistant answers the questions based on the given video captions and speech in time order.",
+            "A chat between a curious user and an artificial intelligence assistant. "
+            "The assistant gives helpful, detailed, and polite answers to the user's questions.",
             roles=("USER", "ASSISTANT"),
-            messages=(("USER", prompt), ("ASSISTANT", "yes")),
+            messages=(("USER", prompt + "Example: Is this a Video?"),
+                      ("ASSISTANT", "yes")),
             offset=0,
             sep_style=SeparatorStyle.TWO,
             sep=" ",
             sep2="</s>",
         )
-        # return Conversation(
-        #     system=
-        #     "A chat between a curious user and an artificial intelligence assistant. "
-        #     "The assistant gives helpful, detailed, and polite answers to the user's questions.",
-        #     roles=("USER", "ASSISTANT"),
-        #     messages=(("USER", prompt), ("ASSISTANT", "yes")),
-        #     offset=0,
-        #     sep_style=SeparatorStyle.TWO,
-        #     sep=" ",
-        #     sep2="</s>",
-        # )
-
-    def _get_prompt(self, caption: dict = None, speech: str = None):
-        """ Get the prompt for the conversation.
-        
-        """
-        if caption is None:
-            # Load the caption from the output path.
-            print("Loading the caption from the output path.")
-            caption = dict()
-            with open(self.config['output_path'], 'r') as f:
-                caption = json.load(f)
-        captions = ""
-        for it, v in enumerate(caption.values()):
-            captions += "Caption" + str(it) + ": " + v + "\n"
-        prompt = "Caption from the video: " + captions + "\n----\n" + "Speech from the video: " + speech + "\n----\n" + "Example: Is this a Video?"
-            # "Answer the questions based on the given video captions in time " + \
-            # "order. Imagine the video based on simple words in caption.\n----\n" \
-            
-        prompt = prompt.strip()
-            
-
-        return prompt

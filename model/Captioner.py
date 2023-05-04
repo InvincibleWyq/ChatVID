@@ -25,7 +25,7 @@ class Captioner:
 
         # self.frames_folder = config['frames_folder']
 
-    def caption_frames(self, video_src, video_name, fps=30):
+    def caption_frames(self, video_src, video_name, num_frames=20):
         """ Caption all frames in the folder
         """
         print("Captioning frames...")
@@ -33,7 +33,7 @@ class Captioner:
             print("video_src is a video file")
             video_name = video_src.split('/')[-1]
             video_src = video_src[:-len(video_name)]
-        frame_list = self._get_frames(video_src, video_name, fps)
+        frame_list = self._get_frames(video_src, video_name, num_frames)
         # frame_folder = self.src_dir + 'frames'
 
         # get frame paths in the folder and sort them
@@ -42,24 +42,26 @@ class Captioner:
         # frame_paths.sort(key=lambda x: int(x.split('/')[-1].split('.')[0]))
 
         # caption each frame
-        captions = {}
+        captions = "In this video: \n"
         for it, frame in enumerate(frame_list):
-            caption = self._caption_frame(frame)
-            captions[it] = caption
+            captions += self.image_captioner.caption_image(image=frame)
+            captions += self.dense_captioner.image_dense_caption(
+                image_src=None, image=frame)
 
         # recognize speech
-        speech = self.speech_recognizer.recognize_speech(video_src +
-                                                         video_name)
+        captions += self.speech_recognizer.recognize_speech(video_src +
+                                                            video_name)
 
-        print("Captions and Speech generated")
-        return captions, speech
+        print("Captions generated")
+        print(captions)
+        return captions
 
-    def _get_frames(self, video_src, video_name, fps=30, save=False):
+    def _get_frames(self, video_src, video_name, num_frames=20, save=False):
         """ Get frames from a video
         
         Args:
             video_src: path to the video
-            fps: frames per second
+            num_frames: number of frames to be sampled
         
         """
         if not os.path.exists(video_src):
@@ -67,8 +69,10 @@ class Captioner:
         self.src_dir = video_src
         container = av.open(video_src + video_name)
         frames = []
+        total_frames = container.streams.video[0].frames
+        interval = total_frames // num_frames
         for frame in container.decode(video=0):
-            if frame.index % fps == 0:
+            if frame.index % interval == 0:
                 frames.append(frame.to_image())  # av.VideoFrame to PIL.Image
         # save frames to folder
         if save:
