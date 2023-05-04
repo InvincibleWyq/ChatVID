@@ -135,6 +135,11 @@ class VicunaChatBot:
         """
         self.conv = self.conv_template.copy()
 
+    def change_conv_template_(self, conv_template):
+        self.conv_template = conv_template.copy()
+        self.conv = conv_template.copy()
+        
+        
     def change_conv_(self, conv_template):
         """ Change the conversation.
         """
@@ -259,12 +264,12 @@ class VicunaHandler:
             self.config['debug'],
         )
 
-    def gr_chatbot_init(self, caption: dict):
+    def gr_chatbot_init(self, caption: dict, speech: str):
         """ Initialise the chatbot for gradio.
         """
-        prompt = self._get_prompt(caption)
+        prompt = self._get_prompt(caption, speech)
         template = self._construct_conversation(prompt)
-        self.chatbot.change_conv_(template)
+        self.chatbot.change_conv_template_(template)
         print("Chatbot initialised.")
 
     def gr_chat(self, inp):
@@ -291,7 +296,7 @@ class VicunaHandler:
             sep2="</s>",
         )
 
-    def _get_prompt(self, caption: dict = None):
+    def _get_prompt(self, caption: dict = None, speech: str = None):
         """ Get the prompt for the conversation.
         
         """
@@ -304,6 +309,10 @@ class VicunaHandler:
         captions = ""
         for it, v in enumerate(caption.values()):
             captions += "Caption" + str(it) + ": " + v + "\n"
-        prompt = "Answer the questions based on the given video captions in time order. Imagine the video based on simple words in caption.\n----\n" + captions + "\n----\n Example: Is this a Video?"
+        prompt = \
+            "Answer the questions based on the given video captions in time " + \
+            "order. Imagine the video based on simple words in caption.\n----\n" \
+            + captions + "\n----\n" + "Speech from the video: " + speech + \
+            "\n----\n" + "Example: Is this a Video?"
 
         return prompt
