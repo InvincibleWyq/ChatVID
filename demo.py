@@ -60,8 +60,9 @@ if __name__ == '__main__':
                     # upload = gr.UploadButton("TEST")
                     upload_button = gr.Button("Begin Upload")
                     chat_button = gr.Button("Let's Chat!", interactive=False)
+                    temp_button = gr.Button("TEMP")
                     fps = gr.Slider(
-                        minimum=120, maximum=720, step=1, label="FPS")
+                        minimum=30, value=120, maximum=720, step=1, label="FPS")
 
             with gr.Column():
                 chatbot = gr.Chatbot()
@@ -69,6 +70,7 @@ if __name__ == '__main__':
                 summarised_caption = gr.State("")
                 speech = gr.State("")
                 video_name = gr.State("")
+                hard_coded_question = gr.State("Summarise the video captions and speech in 7 sentences.")
                 with gr.Row(visible=False) as input:
                     with gr.Column(scale=0.7):
                         txt = gr.Textbox(
@@ -103,7 +105,7 @@ if __name__ == '__main__':
                               [summarised_caption, speech],
                               None).then(lambda: gr.update(visible=True), None,
                                          input)
-
+        # temp_button.click(respond, inputs=[hard_coded_question, chatbot], outputs=[txt, chatbot])
         txt.submit(respond, inputs=[txt, chatbot], outputs=[txt, chatbot])
         run_button.click(
             respond, inputs=[txt, chatbot], outputs=[txt, chatbot])

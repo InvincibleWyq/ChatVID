@@ -129,6 +129,7 @@ class VicunaChatBot:
 
         print(captions)
         return captions
+    
 
     def clear_conv_(self):
         """ Clear the conversation.
@@ -286,8 +287,8 @@ class VicunaHandler:
         """
         return Conversation(
             system=
-            "A chat between a curious user and an artificial intelligence assistant. "
-            "The assistant gives helpful, detailed, and polite answers to the user's questions.",
+            "A chat between a curious user and an artificial intelligence assistant answering quetions on videos."
+            "The assistant answers the questions based on the given video captions and speech in time order.",
             roles=("USER", "ASSISTANT"),
             messages=(("USER", prompt), ("ASSISTANT", "yes")),
             offset=0,
@@ -295,6 +296,17 @@ class VicunaHandler:
             sep=" ",
             sep2="</s>",
         )
+        # return Conversation(
+        #     system=
+        #     "A chat between a curious user and an artificial intelligence assistant. "
+        #     "The assistant gives helpful, detailed, and polite answers to the user's questions.",
+        #     roles=("USER", "ASSISTANT"),
+        #     messages=(("USER", prompt), ("ASSISTANT", "yes")),
+        #     offset=0,
+        #     sep_style=SeparatorStyle.TWO,
+        #     sep=" ",
+        #     sep2="</s>",
+        # )
 
     def _get_prompt(self, caption: dict = None, speech: str = None):
         """ Get the prompt for the conversation.
@@ -309,10 +321,11 @@ class VicunaHandler:
         captions = ""
         for it, v in enumerate(caption.values()):
             captions += "Caption" + str(it) + ": " + v + "\n"
-        prompt = \
-            "Answer the questions based on the given video captions in time " + \
-            "order. Imagine the video based on simple words in caption.\n----\n" \
-            + captions + "\n----\n" + "Speech from the video: " + speech + \
-            "\n----\n" + "Example: Is this a Video?"
+        prompt = "Caption from the video: " + captions + "\n----\n" + "Speech from the video: " + speech + "\n----\n" + "Example: Is this a Video?"
+            # "Answer the questions based on the given video captions in time " + \
+            # "order. Imagine the video based on simple words in caption.\n----\n" \
+            
+        prompt = prompt.strip()
+            
 
         return prompt

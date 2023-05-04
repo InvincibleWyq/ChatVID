@@ -159,7 +159,7 @@ def generate_stream(
 
     input_ids = tokenizer(prompt).input_ids
     output_ids = list(input_ids)
-    # print("token len:", len(input_ids)) ## TODO
+    print("token len:", len(input_ids)) ## TODO
     max_src_len = context_len - max_new_tokens - 8
     input_ids = input_ids[-max_src_len:]
 

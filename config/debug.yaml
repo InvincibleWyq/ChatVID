@@ -10,7 +10,7 @@ vicuna:
   max_gpu_memory: '40Gib'
   load_8bit: False
   conv_template: 
-  temperature: 0.9
+  temperature: 1.0
   max_new_tokens: 512
   debug: False
   output_path: '/nvme/wangyiqin/vid_cap/VideoChat/examples/test.json'

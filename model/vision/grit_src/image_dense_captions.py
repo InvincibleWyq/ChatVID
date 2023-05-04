@@ -22,6 +22,13 @@ from utils.util import resize_long_edge_cv2
 # constants
 WINDOW_NAME = "GRiT"
 
+def dense_pred_to_caption_no_bbox(predictions):
+    boxes = predictions["instances"].pred_boxes if predictions["instances"].has("pred_boxes") else None
+    object_description = predictions["instances"].pred_object_descriptions.data
+    new_caption = ""
+    for i in range(len(object_description)):
+        new_caption += (object_description[i] + "; ")
+    return new_caption
 
 def dense_pred_to_caption(predictions):
     boxes = predictions["instances"].pred_boxes if predictions["instances"].has("pred_boxes") else None
@@ -66,7 +73,7 @@ def image_caption_api(image_src, device, image=None):
         img = convert_PIL_to_numpy(img, format="BGR")
         img = resize_long_edge_cv2(img, 384)
         predictions, visualized_output = demo.run_on_image(img)
-        new_caption = dense_pred_to_caption(predictions)
+        new_caption = dense_pred_to_caption_no_bbox(predictions)
     else:
         img = read_image(image_src, format="BGR")
         img = resize_long_edge_cv2(img, 384)
