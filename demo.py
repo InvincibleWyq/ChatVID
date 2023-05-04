@@ -60,7 +60,6 @@ if __name__ == '__main__':
                     # upload = gr.UploadButton("TEST")
                     upload_button = gr.Button("Begin Upload")
                     chat_button = gr.Button("Let's Chat!", interactive=False)
-                    temp_button = gr.Button("TEMP")
                     fps = gr.Slider(
                         minimum=120, maximum=720, step=1, label="FPS")
 
