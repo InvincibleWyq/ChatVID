@@ -1,6 +1,9 @@
-from model.vision import DenseCaptioner, ImageCaptioner
+import os
+
+import av
+
 from model.audio import SpeechRecognizer
-import av, os
+from model.vision import DenseCaptioner, ImageCaptioner
 
 
 class Captioner:
@@ -31,7 +34,7 @@ class Captioner:
         frame_list = self._get_frames(video_src, video_name, num_frames)
 
         # caption each frame
-        captions = "In this video: \n"
+        captions = ""
         for it, frame in enumerate(frame_list):
             captions += self.image_captioner.caption_image(image=frame)
             captions += self.dense_captioner.image_dense_caption(
@@ -42,7 +45,6 @@ class Captioner:
                                                             video_name)
 
         print("Captions generated")
-        print(captions)
         return captions
 
     def _get_frames(self, video_src, video_name, num_frames=20, save=False):

@@ -1,11 +1,8 @@
-from model.fastchat.serve.inference import (ChatIO, chat_loop, load_model,
-                                            generate_stream)
-from model.fastchat.conversation import (
-    get_default_conv_template,
-    compute_skip_echo_len,
-    SeparatorStyle,
-    Conversation,
-)
+from model.fastchat.conversation import (Conversation, SeparatorStyle,
+                                         compute_skip_echo_len,
+                                         get_default_conv_template)
+from model.fastchat.serve.inference import (ChatIO, chat_loop, generate_stream,
+                                            load_model)
 
 
 class SimpleChatIO(ChatIO):
@@ -249,13 +246,22 @@ class VicunaHandler:
         Args:
             prompt: the prompt for the conversation.
         """
+        user_message = "The following text described what you have "
+        "seen, read, found, heard and thought from a consecutive video. "
+        "Some of the texts may not be accurate. "
+        "Try to conclude what happens in the video, "
+        "then answer my question based on your conclusion.\n"
+        "<video begin>\n" + prompt + "<video end>\n"
+        "Example: Is this a Video?"
+
+        print(user_message)
+
         return Conversation(
-            system=
-            "A chat between a curious user and an artificial intelligence assistant. "
-            "The assistant gives helpful, detailed, and polite answers to the user's questions.",
+            system="A chat between a curious user and an artificial "
+            "intelligence assistant. The assistant gives helpful, detailed, "
+            "and polite answers to the user's questions.",
             roles=("USER", "ASSISTANT"),
-            messages=(("USER", prompt + "Example: Is this a Video?"),
-                      ("ASSISTANT", "yes")),
+            messages=(("USER", user_message), ("ASSISTANT", "yes")),
             offset=0,
             sep_style=SeparatorStyle.TWO,
             sep=" ",
