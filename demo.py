@@ -91,9 +91,7 @@ if __name__ == '__main__':
         chat_button.click(handler.gr_chatbot_init, [captions],
                           None).then(lambda: gr.update(visible=True), None,
                                      input)
-
-        temp
-        
+                                 
         txt.submit(respond, inputs=[txt, chatbot], outputs=[txt, chatbot])
         run_button.click(
             respond, inputs=[txt, chatbot], outputs=[txt, chatbot])

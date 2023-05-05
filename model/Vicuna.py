@@ -246,13 +246,13 @@ class VicunaHandler:
         Args:
             prompt: the prompt for the conversation.
         """
-        user_message = "The following text described what you have "
-        "seen, read, found, heard and thought from a consecutive video. "
-        "Some of the texts may not be accurate. "
-        "Try to conclude what happens in the video, "
-        "then answer my question based on your conclusion.\n"
-        "<video begin>\n" + prompt + "<video end>\n"
-        "Example: Is this a Video?"
+        user_message = "The following text described what you have " +\
+            "seen, read, found, heard and thought from a consecutive video." +\
+            " Some of the texts may not be accurate. " +\
+            "Try to conclude what happens in the video, " +\
+            "then answer my question based on your conclusion.\n" +\
+            "<video begin>\n" + prompt + "<video end>\n" +\
+            "Example: Is this a Video?"
 
         print(user_message)
 
