@@ -9,8 +9,4 @@ Chat about anything on any video!
 ```
 python demo.py --config config/debug.yaml
 ```
-## CLI Usage
-### Step I
-* Change Configs at `config/debug.yaml`
-### Step II
-* run the bash script at terminal using: `bash run.sh`
+
