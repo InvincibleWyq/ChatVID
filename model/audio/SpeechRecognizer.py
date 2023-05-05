@@ -19,8 +19,12 @@ class SpeechRecognizer:
 
     def recognize_speech(self, video_src=None):
         generated_text = self.model.transcribe(video_src)['text']
-        print('\033[1;35m' + '*' * 100 + '\033[0m')
-        print('\nStep3, Whisper generated text:')
-        print(generated_text)
-        print('\033[1;35m' + '*' * 100 + '\033[0m')
-        return generated_text
+        if generated_text == '':
+            ret_text = "You hear nothing.\n"
+        else:
+            ret_text = "You hear \"" + generated_text + "\"\n"
+        # print('\033[1;35m' + '*' * 100 + '\033[0m')
+        # print('\nStep3, Whisper generated text:')
+        # print(ret_text)
+        # print('\033[1;35m' + '*' * 100 + '\033[0m')
+        return ret_text

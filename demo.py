@@ -1,8 +1,10 @@
 import argparse
-from model import Captioner, VicunaHandler
-from config.config_utils import get_config
-import gradio as gr
 import time
+
+import gradio as gr
+
+from config.config_utils import get_config
+from model import Captioner, VicunaHandler
 
 
 def set_example_video(example: list) -> dict:
@@ -39,7 +41,6 @@ if __name__ == '__main__':
     config = get_config(_args.config_path)
 
     captioner = Captioner(config)
-    # prompted_captions = captioner.caption_frames(config['video_path'], config['video_name'], config['fps'])
 
     # with open('./test.json', 'w') as f:
     #     json.dump(prompted_captions, f)
@@ -57,20 +58,21 @@ if __name__ == '__main__':
 
                 # file_output = gr.File()
                 with gr.Column():
-                    # upload = gr.UploadButton("TEST")
                     upload_button = gr.Button("Begin Upload")
                     chat_button = gr.Button("Let's Chat!", interactive=False)
-                    temp_button = gr.Button("TEMP")
-                    fps = gr.Slider(
-                        minimum=30, value=120, maximum=720, step=1, label="FPS")
+                    num_frames = gr.Slider(
+                        minimum=5,
+                        value=12,
+                        maximum=12,
+                        step=1,
+                        label="Number of frames (no more than 12)")
 
             with gr.Column():
                 chatbot = gr.Chatbot()
-                prompted_captions = gr.State("")
-                summarised_caption = gr.State("")
-                speech = gr.State("")
+                captions = gr.State("")
                 video_name = gr.State("")
-                hard_coded_question = gr.State("Summarise the video captions and speech in 7 sentences.")
+                hard_coded_question = gr.State(
+                    "Summarise the video captions and speech in 7 sentences.")
                 with gr.Row(visible=False) as input:
                     with gr.Column(scale=0.7):
                         txt = gr.Textbox(
@@ -81,38 +83,21 @@ if __name__ == '__main__':
                         run_button = gr.Button("RUN!")
                     with gr.Column(scale=0.15, min_width=0):
                         clear_button = gr.Button("CLEAR")
-        # with gr.Row():
-        # example_videos = gr.Dataset(components=[video_path], samples=[['examples/temple_of_heaven_720p.mp4']])
-
-        # example_videos.click(fn=set_example_video, inputs=example_videos, outputs=example_videos.components)
-        # upload_button.click(lambda: gr.update(interactive=True), None, chat_button)
-        # upload_button.click(lambda: [], None, chatbot)
-        # upload.upload(upload_file, upload, file_output)
-
-        # upload_button.click(
-        #     upload_video, [video_path], None
-        # )
 
         upload_button.click(captioner.caption_frames,
-                            [video_path, video_name, fps],
-                            [prompted_captions, speech]).then(
+                            [video_path, video_name, num_frames],
+                            [captions]).then(
                                 lambda: gr.update(interactive=True), None,
                                 chat_button).then(lambda: [], None, chatbot)
 
-        chat_button.click(handler.summarise_caption,
-                          [prompted_captions], [summarised_caption]).then(
-                              handler.gr_chatbot_init,
-                              [summarised_caption, speech],
-                              None).then(lambda: gr.update(visible=True), None,
-                                         input).then(respond, inputs=[hard_coded_question, chatbot], outputs=[txt, chatbot])
-        temp_button.click(respond, inputs=[hard_coded_question, chatbot], outputs=[txt, chatbot])
+        chat_button.click(handler.gr_chatbot_init, [captions],
+                          None).then(lambda: gr.update(visible=True), None,
+                                     input)
+
         txt.submit(respond, inputs=[txt, chatbot], outputs=[txt, chatbot])
         run_button.click(
             respond, inputs=[txt, chatbot], outputs=[txt, chatbot])
         clear_button.click(
             clear_chat, inputs=[chatbot], outputs=[txt, chatbot])
-        # clear_button.click(lambda: None, None, chatbot, queue=False)
 
     demo.launch(share=True)
-
-    # handler.chat()
