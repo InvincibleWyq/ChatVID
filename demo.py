@@ -1,8 +1,10 @@
 import argparse
-from model import Captioner, VicunaHandler
-from config.config_utils import get_config
-import gradio as gr
 import time
+
+import gradio as gr
+
+from config.config_utils import get_config
+from model import Captioner, VicunaHandler
 
 
 def set_example_video(example: list) -> dict:
@@ -60,7 +62,7 @@ if __name__ == '__main__':
                     chat_button = gr.Button("Let's Chat!", interactive=False)
                     num_frames = gr.Slider(
                         minimum=5,
-                        value=8,
+                        value=12,
                         maximum=12,
                         step=1,
                         label="Number of frames (no more than 12)")
@@ -91,7 +93,7 @@ if __name__ == '__main__':
         chat_button.click(handler.gr_chatbot_init, [captions],
                           None).then(lambda: gr.update(visible=True), None,
                                      input)
-                                 
+
         txt.submit(respond, inputs=[txt, chatbot], outputs=[txt, chatbot])
         run_button.click(
             respond, inputs=[txt, chatbot], outputs=[txt, chatbot])
