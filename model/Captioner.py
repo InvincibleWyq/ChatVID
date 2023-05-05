@@ -38,7 +38,7 @@ class Captioner:
         # caption each frame
         captions = ""
         for it, frame in enumerate(frame_list):
-            captions += "[" + str(timestamp_list[it]) + "second] :"
+            captions += "[" + str(timestamp_list[it]) + " second]: "
             captions += self.image_captioner.caption_image(image=frame)
             captions += self.dense_captioner.image_dense_caption(
                 image_src=None, image=frame)
@@ -48,7 +48,7 @@ class Captioner:
                                                             video_name)
 
         print("Captions generated")
-        return captions#, timestamp_list
+        return captions
 
     def _get_frames(self, video_src, video_name, num_frames=20, save=False):
         """ Get frames from a video

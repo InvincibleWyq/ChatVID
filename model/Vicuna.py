@@ -230,12 +230,10 @@ class VicunaHandler:
             self.config['debug'],
         )
 
-    def gr_chatbot_init(self, caption: str, time_stamp: list=None):
+    def gr_chatbot_init(self, caption: str):
         """ Initialise the chatbot for gradio. """
-        if time_stamp is not None:
-            template = self._construct_conversation(caption, time_stamp)
-        else:
-            template = self._construct_conversation(caption)
+        
+        template = self._construct_conversation(caption)
         self.chatbot.change_conv_template_(template)
         print("Chatbot initialised.")
 
@@ -244,17 +242,12 @@ class VicunaHandler:
         return self.chatbot.chat(inp, self.config['temperature'],
                                  self.config['max_new_tokens'])
 
-    def _construct_conversation(self, prompt, time_stamp=None):
+    def _construct_conversation(self, prompt):
         """ Construct a conversation template.
         Args:
             prompt: the prompt for the conversation.
         """
-        if time_stamp is not None:
-            # add time stamp every 2 lines
-            prompt = prompt.split('\n')
-            prompt = [ "[" +str(time_stamp[i]) + " second]: " + prompt[i]  if i % 2 == 0 else prompt[i] for i in range(len(prompt))]
-            # prompt should be str
-            prompt = "\n".join(prompt)
+
         user_message = "The following text described what you have " +\
             "seen, read, found, heard and thought from a consecutive video." +\
             " Some of the texts may not be accurate. " +\
