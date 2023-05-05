@@ -47,7 +47,7 @@ if __name__ == '__main__':
     global handler
     handler = VicunaHandler(config['vicuna'])
 
-    with gr.Blocks() as demo:
+    with gr.Blocks(theme=gr.themes.Soft()) as demo:
         gr.Markdown("## <h1><center>ChatVID</center></h1>")
         gr.Markdown("""
         Chat about any video with ChatVID! ChatVID is a video chatbot that can chat about any video.
@@ -70,6 +70,7 @@ if __name__ == '__main__':
             with gr.Column():
                 chatbot = gr.Chatbot()
                 captions = gr.State("")
+                time_stamp = gr.State()
                 video_name = gr.State("")
                 hard_coded_question = gr.State(
                     "Summarise the video captions and speech in 7 sentences.")
