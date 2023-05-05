@@ -1,6 +1,5 @@
 from PIL import Image
-import requests
-from transformers import Blip2Processor, Blip2ForConditionalGeneration, BlipProcessor, BlipForConditionalGeneration
+from transformers import Blip2Processor, Blip2ForConditionalGeneration
 import torch
 from utils.util import resize_long_edge
 
@@ -29,8 +28,9 @@ class ImageCaptioner:
         generated_ids = self.model.generate(**inputs)
         generated_text = self.processor.batch_decode(
             generated_ids, skip_special_tokens=True)[0].strip()
-        print('\033[1;35m' + '*' * 100 + '\033[0m')
-        print('\nStep1, BLIP2 caption:')
-        print(generated_text)
-        print('\033[1;35m' + '*' * 100 + '\033[0m')
-        return generated_text
+        ret_text = "You see " + generated_text + ".\n"
+        # print('\033[1;35m' + '*' * 100 + '\033[0m')
+        # print('\nStep1, BLIP2 caption:')
+        # print(ret_text)
+        # print('\033[1;35m' + '*' * 100 + '\033[0m')
+        return ret_text

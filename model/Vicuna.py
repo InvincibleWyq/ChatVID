@@ -1,12 +1,8 @@
-from model.fastchat.serve.inference import ChatIO, question_loop, answer_loop, chat_loop, load_model, generate_stream
-import json, os
-from model.fastchat.conversation import (
-    conv_templates,
-    get_default_conv_template,
-    compute_skip_echo_len,
-    SeparatorStyle,
-    Conversation,
-)
+from model.fastchat.conversation import (Conversation, SeparatorStyle,
+                                         compute_skip_echo_len,
+                                         get_default_conv_template)
+from model.fastchat.serve.inference import (ChatIO, chat_loop, generate_stream,
+                                            load_model)
 
 
 class SimpleChatIO(ChatIO):
@@ -60,8 +56,7 @@ class VicunaChatBot:
         self.conv_template = self.conv.copy()
 
     def chat(self, inp: str, temperature: float, max_new_tokens: int):
-        """Vicuna as a chatbot.
-        """
+        """ Vicuna as a chatbot. """
         self.conv.append_message(self.conv.roles[0], inp)
         self.conv.append_message(self.conv.roles[1], None)
 
@@ -91,8 +86,7 @@ class VicunaChatBot:
 
     def summarise(self, caption: dict, temperature: float,
                   max_new_tokens: int):
-        """ Vicuna as a summariser.
-        """
+        """ Vicuna as a summariser. """
         questions = caption
         captions = {}
         for id, question in questions.items():
@@ -129,21 +123,17 @@ class VicunaChatBot:
 
         print(captions)
         return captions
-    
 
     def clear_conv_(self):
-        """ Clear the conversation.
-        """
+        """ Clear the conversation. """
         self.conv = self.conv_template.copy()
 
     def change_conv_template_(self, conv_template):
         self.conv_template = conv_template.copy()
         self.conv = conv_template.copy()
-        
-        
+
     def change_conv_(self, conv_template):
-        """ Change the conversation.
-        """
+        """ Change the conversation. """
         self.conv = conv_template.copy()
 
 
@@ -162,7 +152,6 @@ def chat_loop(
     # Model
     model, tokenizer = load_model(model_path, device, num_gpus, max_gpu_memory,
                                   load_8bit, debug)
-    is_chatglm = "chatglm" in str(type(model)).lower()
 
     # Chat
     if conv_template:
@@ -208,8 +197,8 @@ def chat_loop(
 
 
 class VicunaHandler:
-    """ VicunaHandler is a class that handles the communication between the frontend and the backend.
-    """
+    """ VicunaHandler is a class that handles the communication between the
+    frontend and the backend. """
 
     def __init__(self, config):
         self.config = config
@@ -225,33 +214,9 @@ class VicunaHandler:
             self.config['debug'],
         )
 
-    def summarise_caption(self, caption):
-        """ Summarise the caption to paragraph.
-        """
-        self.chatbot.clear_conv_()
-        return self.chatbot.summarise(caption, self.config['temperature'],
-                                      self.config['max_new_tokens'])
-        # return question_loop(
-        #     self.config['model_path'],
-        #     self.config['device'],
-        #     self.config['num_gpus'],
-        #     self.config['max_gpu_memory'],
-        #     self.config['load_8bit'],
-        #     self.config['conv_template'],
-        #     self.config['temperature'],
-        #     self.config['max_new_tokens'],
-        #     self.chat_io,
-        #     self.config['debug'],
-        #     prompt_caption=caption,
-        #     output_path=self.config['output_path'],
-        # )
-
     def chat(self):
-        """ Chat with the Vicuna.
-        """
-
-        prompt = self._get_prompt()
-        template = self._construct_conversation(prompt)
+        """ Chat with the Vicuna. """
+        template = self._construct_conversation("")
         chat_loop(
             self.config['model_path'],
             self.config['device'],
@@ -265,67 +230,40 @@ class VicunaHandler:
             self.config['debug'],
         )
 
-    def gr_chatbot_init(self, caption: dict, speech: str):
-        """ Initialise the chatbot for gradio.
-        """
-        prompt = self._get_prompt(caption, speech)
-        template = self._construct_conversation(prompt)
+    def gr_chatbot_init(self, caption: str):
+        """ Initialise the chatbot for gradio. """
+        template = self._construct_conversation(caption)
         self.chatbot.change_conv_template_(template)
         print("Chatbot initialised.")
 
     def gr_chat(self, inp):
-        """ Chat using gradio as the frontend.
-        """
+        """ Chat using gradio as the frontend. """
         return self.chatbot.chat(inp, self.config['temperature'],
                                  self.config['max_new_tokens'])
 
     def _construct_conversation(self, prompt):
         """ Construct a conversation template.
-            
         Args:
             prompt: the prompt for the conversation.
         """
+        user_message = "The following text described what you have " +\
+            "seen, read, found, heard and thought from a consecutive video." +\
+            " Some of the texts may not be accurate. " +\
+            "Try to conclude what happens in the video, " +\
+            "then answer my question based on your conclusion.\n" +\
+            "<video begin>\n" + prompt + "<video end>\n" +\
+            "Example: Is this a Video?"
+
+        print(user_message)
+
         return Conversation(
-            system=
-            "A chat between a curious user and an artificial intelligence assistant answering quetions on videos."
-            "The assistant answers the questions based on the given video captions and speech in time order.",
+            system="A chat between a curious user and an artificial "
+            "intelligence assistant. The assistant gives helpful, detailed, "
+            "and polite answers to the user's questions.",
             roles=("USER", "ASSISTANT"),
-            messages=(("USER", prompt), ("ASSISTANT", "yes")),
+            messages=(("USER", user_message), ("ASSISTANT", "yes")),
             offset=0,
             sep_style=SeparatorStyle.TWO,
             sep=" ",
             sep2="</s>",
         )
-        # return Conversation(
-        #     system=
-        #     "A chat between a curious user and an artificial intelligence assistant. "
-        #     "The assistant gives helpful, detailed, and polite answers to the user's questions.",
-        #     roles=("USER", "ASSISTANT"),
-        #     messages=(("USER", prompt), ("ASSISTANT", "yes")),
-        #     offset=0,
-        #     sep_style=SeparatorStyle.TWO,
-        #     sep=" ",
-        #     sep2="</s>",
-        # )
-
-    def _get_prompt(self, caption: dict = None, speech: str = None):
-        """ Get the prompt for the conversation.
-        
-        """
-        if caption is None:
-            # Load the caption from the output path.
-            print("Loading the caption from the output path.")
-            caption = dict()
-            with open(self.config['output_path'], 'r') as f:
-                caption = json.load(f)
-        captions = ""
-        for it, v in enumerate(caption.values()):
-            captions += "Caption" + str(it) + ": " + v + "\n"
-        prompt = "Caption from the video: " + captions + "\n----\n" + "Speech from the video: " + speech + "\n----\n" + "Example: Is this a Video?"
-            # "Answer the questions based on the given video captions in time " + \
-            # "order. Imagine the video based on simple words in caption.\n----\n" \
-            
-        prompt = prompt.strip()
-            
-
-        return prompt
