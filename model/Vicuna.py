@@ -263,9 +263,6 @@ class VicunaHandler:
         return Conversation(
             system="A chat between a curious user and an artificial intelligence assistant answering quetions on videos."
             "The assistant answers the questions based on the given video captions and speech in time order.",
-            # system="A chat between a curious user and an artificial "
-            # "intelligence assistant. The assistant gives helpful, detailed, "
-            # "and polite answers to the user's questions.",
             roles=("USER", "ASSISTANT"),
             messages=(("USER", user_message), ("ASSISTANT", "yes")),
             offset=0,

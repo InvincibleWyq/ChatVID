@@ -42,8 +42,6 @@ if __name__ == '__main__':
 
     captioner = Captioner(config)
 
-    # with open('./test.json', 'w') as f:
-    #     json.dump(prompted_captions, f)
     global handler
     handler = VicunaHandler(config['vicuna'])
 
@@ -70,10 +68,6 @@ if __name__ == '__main__':
             with gr.Column():
                 chatbot = gr.Chatbot()
                 captions = gr.State("")
-                time_stamp = gr.State()
-                video_name = gr.State("")
-                hard_coded_question = gr.State(
-                    "Summarise the video captions and speech in 7 sentences.")
                 with gr.Row(visible=False) as input:
                     with gr.Column(scale=0.7):
                         txt = gr.Textbox(
@@ -85,8 +79,7 @@ if __name__ == '__main__':
                     with gr.Column(scale=0.15, min_width=0):
                         clear_button = gr.Button("CLEAR")
 
-        upload_button.click(captioner.caption_frames,
-                            [video_path, video_name, num_frames],
+        upload_button.click(captioner.caption_frames, [video_path, num_frames],
                             [captions]).then(
                                 lambda: gr.update(interactive=True), None,
                                 chat_button).then(lambda: [], None, chatbot)
