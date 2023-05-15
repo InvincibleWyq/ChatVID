@@ -54,7 +54,6 @@ if __name__ == '__main__':
             with gr.Column():
                 video_path = gr.Video(label="Video")
 
-                # file_output = gr.File()
                 with gr.Column():
                     upload_button = gr.Button("Begin Upload")
                     chat_button = gr.Button("Let's Chat!", interactive=False)
@@ -79,7 +78,7 @@ if __name__ == '__main__':
                     with gr.Column(scale=0.15, min_width=0):
                         clear_button = gr.Button("CLEAR")
 
-        upload_button.click(captioner.caption_frames, [video_path, num_frames],
+        upload_button.click(captioner.caption_video, [video_path, num_frames],
                             [captions]).then(
                                 lambda: gr.update(interactive=True), None,
                                 chat_button).then(lambda: [], None, chatbot)

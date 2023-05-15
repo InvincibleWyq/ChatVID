@@ -20,9 +20,8 @@ class Captioner:
 
         self.src_dir = ''
 
-    def caption_frames(self, video_path, num_frames=8):
-        """ Caption all frames in the folder"""
-        print("Captioning frames...")
+    def caption_video(self, video_path, num_frames=8):
+        print("Watching video ...")
 
         video_info = {'filename': video_path, 'start_index': 0}
 
