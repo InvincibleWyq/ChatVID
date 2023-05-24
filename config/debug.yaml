@@ -1,10 +1,10 @@
 device: 'cuda'
-video_path: '/nvme/wangyiqin/vid_cap/VideoChat/examples/'
+video_path: '/mnt/petrelfs/wangyiqin/vid_cap/examples/videos/'
 video_name: 'cook_720p.mp4'
 fps: 120
 
 vicuna:
-  model_path: '/nvme/wangyiqin/vid_cap/vicuna-13b'
+  model_path: '/mnt/petrelfs/wangyiqin/vid_cap/vicuna-13b'
   device: 'cuda'
   num_gpus: 1
   max_gpu_memory: '40Gib'
@@ -13,4 +13,4 @@ vicuna:
   temperature: 1.0
   max_new_tokens: 512
   debug: False
-  output_path: '/nvme/wangyiqin/vid_cap/VideoChat/examples/test.json'
+  output_path: '/mnt/petrelfs/wangyiqin/vid_cap/VideoChatDuplicate/examples/test.json'

@@ -34,7 +34,7 @@ class Captioner:
         ]
         for processor in video_processors:
             video_info = processor.transform(video_info)
-
+        
         timestamp_list = [
             round(i / video_info['avg_fps'], 1)
             for i in video_info['frame_inds']
@@ -42,7 +42,9 @@ class Captioner:
 
         image_captions = self.image_captioner(imgs=video_info['imgs'])
         dense_captions = self.dense_captioner(imgs=video_info['imgs'])
-        speech = self.speech_recognizer(video_path)
+        try: speech = self.speech_recognizer(video_path)
+        except RuntimeError:
+            speech = ""
 
         overall_captions = ""
         for i in range(num_frames):
@@ -53,5 +55,7 @@ class Captioner:
         if speech != "":
             overall_captions += "You hear \"" + speech + "\"\n"
 
+        # TODO Vid2Seq
+        
         print("Captions generated")
         return overall_captions
