@@ -233,6 +233,9 @@ class VicunaHandler:
     def gr_chatbot_init(self, caption: str):
         """ Initialise the chatbot for gradio. """
         
+        import pdb
+        pdb.set_trace()
+        
         template = self._construct_conversation(caption)
         self.chatbot.change_conv_template_(template)
         print("Chatbot initialised.")
