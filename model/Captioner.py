@@ -1,7 +1,7 @@
 from mmaction.datasets.transforms import (DecordInit, SampleFrames, Resize,
                                           FormatShape, DecordDecode)
 from model.audio import SpeechRecognizer
-from model.vision import DenseCaptioner, ImageCaptioner
+from model.vision import DenseCaptioner, ImageCaptioner, Vid2SeqCaptioner
 
 
 class Captioner:
@@ -14,11 +14,18 @@ class Captioner:
             config: configuration file
         """
         self.config = config
-        self.image_captioner = ImageCaptioner(device=config['device'])
-        self.dense_captioner = DenseCaptioner(device=config['device'])
-        self.speech_recognizer = SpeechRecognizer(device=config['device'])
+        self.image_captioner = None #ImageCaptioner(device=config['device'])
+        self.dense_captioner = None #DenseCaptioner(device=config['device'])
+        self.speech_recognizer = None #SpeechRecognizer(device=config['device'])
+        self.vid2seq_captioner = Vid2SeqCaptioner(config=config['vid2seq'])
 
         self.src_dir = ''
+    
+    def debug_vid2seq(self, video_path, num_frames=8):
+        self.vid2seq_captioner(video_path=video_path)
+        
+        
+        return "Debugging vid2seq"
 
     def caption_video(self, video_path, num_frames=8):
         print("Watching video ...")

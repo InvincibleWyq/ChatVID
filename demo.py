@@ -6,7 +6,7 @@ import gradio as gr
 from config.config_utils import get_config
 from model import Captioner, VicunaHandler
 import os
-os.environ['DATA_GYM_CACHE_DIR']="/mnt/petrelfs/wangyiqin/.cache"
+os.environ['DATA_GYM_CACHE_DIR']="/mnt/petrelfs/wangyiqin/.cache" # some writable directory
 
 def set_example_video(example: list) -> dict:
     return gr.Video.update(value=example[0])
@@ -79,7 +79,7 @@ if __name__ == '__main__':
                     with gr.Column(scale=0.15, min_width=0):
                         clear_button = gr.Button("CLEAR")
 
-        upload_button.click(captioner.caption_video, [video_path, num_frames],
+        upload_button.click(captioner.debug_vid2seq, [video_path, num_frames],
                             [captions]).then(
                                 lambda: gr.update(interactive=True), None,
                                 chat_button).then(lambda: [], None, chatbot)

@@ -14,3 +14,8 @@ vicuna:
   max_new_tokens: 512
   debug: False
   output_path: '/mnt/petrelfs/wangyiqin/vid_cap/VideoChatDuplicate/examples/test.json'
+
+vid2seq:
+  clip_path: '/mnt/petrelfs/wangyiqin/vid_cap/examples/ViT-L-14.pt'
+  basename: 'test'
+  output_path: '/mnt/petrelfs/wangyiqin/vid_cap/examples/'
