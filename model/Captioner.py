@@ -14,18 +14,15 @@ class Captioner:
             config: configuration file
         """
         self.config = config
-        self.image_captioner = None #ImageCaptioner(device=config['device'])
-        self.dense_captioner = None #DenseCaptioner(device=config['device'])
-        self.speech_recognizer = None #SpeechRecognizer(device=config['device'])
+        self.image_captioner = ImageCaptioner(device=config['device'])
+        self.dense_captioner = DenseCaptioner(device=config['device'])
+        self.speech_recognizer = SpeechRecognizer(device=config['device'])
         self.vid2seq_captioner = Vid2SeqCaptioner(config=config['vid2seq'])
 
         self.src_dir = ''
     
     def debug_vid2seq(self, video_path, num_frames=8):
-        self.vid2seq_captioner(video_path=video_path)
-        
-        
-        return "Debugging vid2seq"
+        return self.vid2seq_captioner(video_path=video_path)
 
     def caption_video(self, video_path, num_frames=8):
         print("Watching video ...")
@@ -49,6 +46,7 @@ class Captioner:
 
         image_captions = self.image_captioner(imgs=video_info['imgs'])
         dense_captions = self.dense_captioner(imgs=video_info['imgs'])
+        vid2seq_captions = self.vid2seq_captioner(video_path=video_path)
         try: speech = self.speech_recognizer(video_path)
         except RuntimeError:
             speech = ""
@@ -63,6 +61,7 @@ class Captioner:
             overall_captions += "You hear \"" + speech + "\"\n"
 
         # TODO Vid2Seq
-        
+        for i in range(len(vid2seq_captions)):
+            overall_captions += "You notice " + vid2seq_captions[i] + "\n"
         print("Captions generated")
         return overall_captions

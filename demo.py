@@ -79,7 +79,7 @@ if __name__ == '__main__':
                     with gr.Column(scale=0.15, min_width=0):
                         clear_button = gr.Button("CLEAR")
 
-        upload_button.click(captioner.debug_vid2seq, [video_path, num_frames],
+        upload_button.click(captioner.caption_video, [video_path, num_frames],
                             [captions]).then(
                                 lambda: gr.update(interactive=True), None,
                                 chat_button).then(lambda: [], None, chatbot)

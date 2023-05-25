@@ -1,7 +1,16 @@
 from typing import Any
-from model.utils.extract_clip_feature import extract_clip_feature_single_video_fps
-from model.utils.generate_tf_record import generate
+from model.utils import extract_clip_feature_single_video_fps, generate, ScenicCall
+from config import vid2seq_config
+
 import torch
+
+
+import sys
+sys.path.append("/mnt/petrelfs/wangyiqin/vid_cap/scenic") # your scenic path
+from scenic.projects.vid2seq.playground import generate as vid2seq_generate
+
+class Flag(object):
+    pass
 
 class Vid2SeqCaptioner:
     """Vid2SeqCaptioner is a class that uses a video to generate a caption for the video.
@@ -14,7 +23,13 @@ class Vid2SeqCaptioner:
     
     def __call__(self, video_path):
         self._preprocess(video_path)
-        
+        flags = Flag()
+        flags.workdir = self.config['work_dir']
+        flags.config = vid2seq_config.get_config()
+        # flags.config = self.config['config_path']
+        flags.data_dir = self.config['output_path']
+        call = ScenicCall(vid2seq_generate, flags)
+        return call()
         
     def _preprocess(self, video_path):
         """Preprocess the video.
@@ -33,11 +48,13 @@ class Vid2SeqCaptioner:
             device=device
         )
         
+        # get numpy array
         video_feat = video_feat.cpu()
         video_feat = video_feat.numpy()
         
+        # create a dict to store the video info
         video_info_dict = {
-            'basename' : self.config['basename'],
+            'basename' : 'test',
             'output_path' : self.config['output_path'],
             'asr_start' : None,
             'asr_end' : None,
@@ -46,6 +63,7 @@ class Vid2SeqCaptioner:
             'features' : video_feat,
             'duration' : video_info['total_frames'] / video_info['avg_fps'] * 1000000,
         }
+        # begin to generate tfrecord file
         generate(video_info_dict)
         print("tfrecord file generated at {}".format(self.config['output_path']))
         

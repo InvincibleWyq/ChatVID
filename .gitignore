@@ -8,3 +8,4 @@ pretrained_models/
 *.pth
 *.log
 .vscode/*
+vid2seq_workdir/*

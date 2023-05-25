@@ -232,9 +232,7 @@ class VicunaHandler:
 
     def gr_chatbot_init(self, caption: str):
         """ Initialise the chatbot for gradio. """
-        
-        import pdb
-        pdb.set_trace()
+    
         
         template = self._construct_conversation(caption)
         self.chatbot.change_conv_template_(template)
@@ -252,7 +250,7 @@ class VicunaHandler:
         """
 
         user_message = "The following text described what you have " +\
-            "seen, read, found, heard and thought from a consecutive video." +\
+            "seen, found, heard and notice from a consecutive video." +\
             " Some of the texts may not be accurate. " +\
             "Try to conclude what happens in the video, " +\
             "then answer my question based on your conclusion.\n" +\
