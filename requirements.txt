@@ -36,4 +36,3 @@ six
 flax==0.5
 simclr
 tf-models-official
-# clip -> *.npy -> *.csv(video) -> generate_from_file.py -> file0000-0003.tfrecord

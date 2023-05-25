@@ -12,8 +12,10 @@ mim install mmengine mmcv mmaction2
 # Install ffmpeg for Whisper.
 # Note that if Whisper encounters permission errors, you may need to specify the DATA_GYM_CACHE_DIR to your writable cache directory.
 
-cd path_to_scenic/
-pip install .
+cd path_to_scenic/ 
+pip install . # have to use local module, change here TODO
+
+# change the scenic/dataset_lib/video_ops.py and scenic/train_lib_deprecated/train_utils.py
 ```
 
 

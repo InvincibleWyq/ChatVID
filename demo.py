@@ -6,7 +6,7 @@ import gradio as gr
 from config.config_utils import get_config
 from model import Captioner, VicunaHandler
 import os
-os.environ['DATA_GYM_CACHE_DIR']="/mnt/petrelfs/wangyiqin/.cache"
+os.environ['DATA_GYM_CACHE_DIR']="/mnt/petrelfs/wangyiqin/.cache" # some writable directory
 
 def set_example_video(example: list) -> dict:
     return gr.Video.update(value=example[0])

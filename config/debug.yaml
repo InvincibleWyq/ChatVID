@@ -14,3 +14,9 @@ vicuna:
   max_new_tokens: 512
   debug: False
   output_path: '/mnt/petrelfs/wangyiqin/vid_cap/VideoChatDuplicate/examples/test.json'
+
+vid2seq:
+  clip_path: '/mnt/petrelfs/wangyiqin/vid_cap/examples/ViT-L-14.pt'
+  output_path: '/mnt/petrelfs/wangyiqin/vid_cap/examples/'
+  work_dir: 'vid2seq_workdir'
+  config_path: '/mnt/petrelfs/wangyiqin/vid_cap/scenic/scenic/projects/vid2seq/configs/youcook2.py'
