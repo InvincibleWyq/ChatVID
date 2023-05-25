@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+**/*.pyc
+
+*.gin
+
+t5x_pretrained/*
+log/*
+.vscode/*
+build/*
+
+scenic.egg-info/*
