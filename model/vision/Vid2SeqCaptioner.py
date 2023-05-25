@@ -5,8 +5,11 @@ from config import vid2seq_config
 import torch
 
 
-import sys
-sys.path.append("/mnt/petrelfs/wangyiqin/vid_cap/scenic") # your scenic path
+import sys, os
+from pathlib import Path
+# append current path to sys.path
+sys.path.append(str(Path(__file__).parent.parent.parent / "scenic"))
+print(sys.path)
 from scenic.projects.vid2seq.playground import generate as vid2seq_generate
 
 class Flag(object):

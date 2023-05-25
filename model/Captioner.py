@@ -17,7 +17,8 @@ class Captioner:
         self.image_captioner = ImageCaptioner(device=config['device'])
         self.dense_captioner = DenseCaptioner(device=config['device'])
         self.speech_recognizer = SpeechRecognizer(device=config['device'])
-        self.vid2seq_captioner = Vid2SeqCaptioner(config=config['vid2seq'])
+        if self.config['vid2seq']['enable']:
+            self.vid2seq_captioner = Vid2SeqCaptioner(config=config['vid2seq'])
 
         self.src_dir = ''
     
@@ -46,7 +47,10 @@ class Captioner:
 
         image_captions = self.image_captioner(imgs=video_info['imgs'])
         dense_captions = self.dense_captioner(imgs=video_info['imgs'])
-        vid2seq_captions = self.vid2seq_captioner(video_path=video_path)
+        if self.config['vid2seq']['enable']:
+            vid2seq_captions = self.vid2seq_captioner(video_path=video_path)
+        else:
+            vid2seq_captions = []
         try: speech = self.speech_recognizer(video_path)
         except RuntimeError:
             speech = ""

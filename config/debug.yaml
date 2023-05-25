@@ -16,6 +16,7 @@ vicuna:
   output_path: '/mnt/petrelfs/wangyiqin/vid_cap/VideoChatDuplicate/examples/test.json'
 
 vid2seq:
+  enable: True
   clip_path: '/mnt/petrelfs/wangyiqin/vid_cap/examples/ViT-L-14.pt'
   output_path: '/mnt/petrelfs/wangyiqin/vid_cap/examples/'
   work_dir: 'vid2seq_workdir'
