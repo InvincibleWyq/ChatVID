@@ -34,6 +34,7 @@ def generate(rng: jnp.ndarray, config: ml_collections.ConfigDict, workdir: str,
         all_datasets.append(name)
         all_datasets_num_train_examples.append(
             metadata.get('num_train_examples', 0))
+    print("all_datasets", all_datasets)
     dataset = dataset_dict[all_datasets[0]]
 
     model_cls = models.DenseVideoCaptioningModel
@@ -45,21 +46,22 @@ def generate(rng: jnp.ndarray, config: ml_collections.ConfigDict, workdir: str,
     logging.info('Number of processes is %s', jax.process_count())
     del rng
 
+    import functools
+    infer_step_pmapped = jax.pmap(
+    functools.partial(
+        trainer.infer_step,
+        model=model,
+        config=config,
+        debug=config.debug_eval),
+    axis_name='batch',
+    )
+
     tokenizer = trainer.get_tokenizer(config)
     dsname = 'validation'
     iterator = dataset.valid_iter[dsname]
     total_step = range(1)
     for step in total_step:
         batch = next(iterator)
-        import functools
-        infer_step_pmapped = jax.pmap(
-        functools.partial(
-            trainer.infer_step,
-            model=model,
-            config=config,
-            debug=config.debug_eval),
-        axis_name='batch',
-        )
         
         train_state = train_utils.sync_model_state_across_replicas(train_state)
         eval_packs = {}
