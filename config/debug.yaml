@@ -4,11 +4,11 @@ video_name: 'cook_720p.mp4'
 fps: 120
 
 vicuna:
-  model_path: '/mnt/petrelfs/wangyiqin/vid_cap/vicuna-13b'
+  model_path: '/mnt/petrelfs/wangyiqin/vid_cap/vicuna-7b'
   device: 'cuda'
   num_gpus: 1
   max_gpu_memory: '40Gib'
-  load_8bit: False
+  load_8bit: True
   conv_template: 
   temperature: 1.0
   max_new_tokens: 512

@@ -57,7 +57,7 @@ class Captioner:
 
         overall_captions = ""
         for i in range(num_frames):
-            overall_captions += "[" + str(timestamp_list[i]) + " second]: "
+            overall_captions += "[" + str(timestamp_list[i]) + "s]: "
             overall_captions += "You see " + image_captions[i]
             overall_captions += "You find " + dense_captions[i] + "\n"
 

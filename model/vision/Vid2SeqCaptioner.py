@@ -1,5 +1,5 @@
 from typing import Any
-from model.utils import extract_clip_feature_single_video_fps, generate, ScenicCall
+from model.utils import extract_clip_feature_single_video_fps, generate, ScenicCall, ScenicModel
 from config import vid2seq_config
 
 import torch
@@ -9,7 +9,6 @@ import sys, os
 from pathlib import Path
 # append current path to sys.path
 sys.path.append(str(Path(__file__).parent.parent.parent / "scenic"))
-print(sys.path)
 from scenic.projects.vid2seq.playground import generate as vid2seq_generate
 
 class Flag(object):
@@ -23,16 +22,18 @@ class Vid2SeqCaptioner:
     """
     def __init__(self, config):
         self.config = config
-    
-    def __call__(self, video_path):
-        self._preprocess(video_path)
         flags = Flag()
         flags.workdir = self.config['work_dir']
         flags.config = vid2seq_config.get_config()
         # flags.config = self.config['config_path']
         flags.data_dir = self.config['output_path']
-        call = ScenicCall(vid2seq_generate, flags)
-        return call()
+        self.model = ScenicModel(flags)
+        
+    def __call__(self, video_path):
+        self._preprocess(video_path)
+        return self.model()
+        # call = ScenicCall(vid2seq_generate, flags)
+        # return call()
         
     def _preprocess(self, video_path):
         """Preprocess the video.
