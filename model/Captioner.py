@@ -64,8 +64,8 @@ class Captioner:
         if speech != "":
             overall_captions += "You hear \"" + speech + "\"\n"
 
-        # TODO Vid2Seq
         for i in range(len(vid2seq_captions)):
             overall_captions += "You notice " + vid2seq_captions[i] + "\n"
         print("Captions generated")
+        
         return overall_captions
