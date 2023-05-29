@@ -8,9 +8,9 @@ Chat about anything on any video!
 
 
 
-<img src="https://github.com/Go2Heart/ChatVID/assets/71871209/346e5d92-9b64-48b6-8001-87e80386329a" alt="The Temple Of Heaven" class="center">
+<img src="https://github.com/Go2Heart/ChatVID/assets/71871209/346e5d92-9b64-48b6-8001-87e80386329a" alt="The Temple Of Heaven" class="center"><img src="https://github.com/Go2Heart/ChatVID/assets/71871209/aa96f310-83e7-4f7f-9458-9adb1019338f" alt="Cook" class="center">
 <img width="1624" alt="image" src="https://github.com/Go2Heart/ChatVID/assets/71871209/f696591e-0fb7-40c4-bc92-d221c3aa6ca5">
-<img src="https://github.com/Go2Heart/ChatVID/assets/71871209/aa96f310-83e7-4f7f-9458-9adb1019338f" alt="Cook" class="center">
+
 <img width="1624" alt="image" src="https://github.com/Go2Heart/ChatVID/assets/71871209/92659f68-0a32-4c3e-979d-047b3a94de36">
 
 
