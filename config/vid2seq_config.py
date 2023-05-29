@@ -128,7 +128,7 @@ def get_config(runlocal=''):
     # Replace with your checkpoint pretrained on YT-temporal-1bn, assuming it has
     # been trained for 200K iterations
     config.init_from.checkpoint_path = '/mnt/petrelfs/wangyiqin/vid_cap/vid2seq_model'
-    config.init_from.model_config = '/mnt/petrelfs/wangyiqin/vid_cap/scenic/scenic/projects/vid2seq/configs/yttemporal.py'
+    # config.init_from.model_config = '/mnt/petrelfs/wangyiqin/vid_cap/scenic/scenic/projects/vid2seq/configs/yttemporal.py'
     config.init_from.step = 200001 # ytt 200000, anet 200001
 
     config.init_from.encoder = ml_collections.ConfigDict()

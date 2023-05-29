@@ -1,6 +1,8 @@
 # ChatVID
 Chat about anything on any video!
 
+## 
+
 ## Gradio Example
 <img width="1759" alt="image" src="https://user-images.githubusercontent.com/71871209/235849280-1e7b3ba4-80c4-44c3-940c-cf09775d984f.png">
 
@@ -12,10 +14,44 @@ mim install mmengine mmcv mmaction2
 # Install ffmpeg for Whisper.
 # Note that if Whisper encounters permission errors, you may need to specify the DATA_GYM_CACHE_DIR to your writable cache directory.
 
-cd path_to_scenic/ 
-pip install . # have to use local module, change here TODO
 
-# change the scenic/dataset_lib/video_ops.py and scenic/train_lib_deprecated/train_utils.py
+```
+<!-- # change the scenic/dataset_lib/video_ops.py and scenic/train_lib_deprecated/train_utils.py -->
+
+## Setting Up Checkpoints
+* Grit Checkpoints
+```
+Put [Grit](https://datarelease.blob.core.windows.net/grit/models/grit_b_densecap_objectdet.pth) into `pretrained_models` folder in the ChatVID's root folder.
+```
+<!-- 
+### BLIP2 Checkpoints
+```
+It will be acquired automatically using Hugging Face's transformers
+```
+### Whisper Checkpoints
+```
+
+```
+ -->
+
+
+
+* Vicuna Weights
+```
+ChatVID uses frozen Vicuna 7B and 13B models. Please first follow the [instructions](https://github.com/lm-sys/FastChat) to prepare Vicuna v1.1 weights. 
+Then modify the `vicuna.model_path` in the [Infer Config](https://github.com/Go2Heart/ChatVID/blob/master/config/infer.yaml) to the folder that contains Vicuna weights.
+```
+* Vid2Seq Checkpoints
+```
+# 1.Prepare CLIP first for feature extraction in Vid2Seq.
+Get the CLIP [Checkpoints](). Specify the `vid2seq.clip_path` in the [Infer Config](https://github.com/Go2Heart/ChatVID/blob/master/config/infer.yaml) to the checkpoint path. 
+`vid2seq.output_path` is used to store the generated TFRecords and can be specified to any writable directory. 
+`vid2seq.work_dir` is the Flax's working directory and can be specified to any writable directory.
+
+
+
+# 2.Prepare Vid2Seq ActivityNet Checkpoints
+Get the Vid2Seq ActivityNet [Checkpoints](https://storage.googleapis.com/scenic-bucket/vid2seq/anet-captions). And then rename it as `checkpoint_200000`. After that, change the `vid2seq.checkpoint_path` in the  [Infer Config](https://github.com/Go2Heart/ChatVID/blob/master/config/infer.yaml) to the folder directory where contains the checkpoint.
 ```
 
 

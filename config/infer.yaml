@@ -1,0 +1,21 @@
+device: 'cuda'
+
+vicuna:
+  model_path: '/mnt/petrelfs/wangyiqin/vid_cap/vicuna-7b'
+  device: 'cuda'
+  num_gpus: 1
+  max_gpu_memory: '24Gib'
+  load_8bit: True
+  conv_template: 
+  temperature: 1.0
+  max_new_tokens: 512
+  debug: False
+  output_path: '/mnt/petrelfs/wangyiqin/vid_cap/VideoChatDuplicate/examples/test.json'
+
+vid2seq:
+  enable: True
+  clip_path: '/mnt/petrelfs/wangyiqin/vid_cap/examples/ViT-L-14.pt'
+  output_path: '/mnt/petrelfs/wangyiqin/vid_cap/examples/'
+  work_dir: 'vid2seq_workdir'
+  config_path: 'config/vid2seq_config.py'
+  checkpoint_path: '/mnt/petrelfs/wangyiqin/vid_cap/vid2seq_model' #only folder name

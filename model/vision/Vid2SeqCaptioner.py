@@ -27,6 +27,7 @@ class Vid2SeqCaptioner:
         flags.config = vid2seq_config.get_config()
         # flags.config = self.config['config_path']
         flags.data_dir = self.config['output_path']
+        flags.ckpt_dir = self.config['checkpoint_path']
         self.model = ScenicModel(flags)
         
     def __call__(self, video_path):
