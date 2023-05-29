@@ -52,7 +52,7 @@ It will be acquired automatically using Hugging Face's transformers
 ```
  -->
 
-### Vicuna Weights 🐆
+### Vicuna Weights 🦙
 
 ChatVID uses frozen Vicuna 7B and 13B models. Please first follow the [instructions](https://github.com/lm-sys/FastChat) to prepare Vicuna v1.1 weights. 
 Then modify the `vicuna.model_path` in the [Infer Config](https://github.com/Go2Heart/ChatVID/blob/master/config/infer.yaml) to the folder that contains Vicuna weights.
