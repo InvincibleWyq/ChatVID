@@ -4,7 +4,7 @@
  ChatVID 
 </h1>
 <h4 align="center">💬 Chat about anything on any video! 🎥</h4>
-Our ChatVID combines the understanding ability of Large Language Models([Vicuna](https://vicuna.lmsys.org) for current version) and the sensing ablity of Vision Models([BLIP2](https://blog.salesforceairesearch.com/blip-2/)、[GRiT](https://github.com/JialianW/GRiT)、[Vid2Seq](https://antoyang.github.io/vid2seq.html)) and Audio Models([Whisper](https://openai.com/research/whisper)). Altogether, they cooperate a powerful capability to bring users the experience to talk about anything in a video.
+Our ChatVID combines the understanding ability of Large Language Models([Vicuna](https://vicuna.lmsys.org) for current version) and the sensing ablity of Vision Models[BLIP2](https://blog.salesforceairesearch.com/blip-2/)、[GRiT](https://github.com/JialianW/GRiT)、[Vid2Seq](https://antoyang.github.io/vid2seq.html)) and Audio Models([Whisper](https://openai.com/research/whisper). Altogether, they cooperate a powerful capability to bring users the experience to talk about anything in a video.
 
 
 
