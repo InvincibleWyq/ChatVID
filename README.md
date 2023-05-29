@@ -4,7 +4,10 @@ Chat about anything on any video!
 ## 
 
 ## Gradio Example
-<img width="1759" alt="image" src="https://user-images.githubusercontent.com/71871209/235849280-1e7b3ba4-80c4-44c3-940c-cf09775d984f.png">
+<img width="1637" alt="image" src="https://github.com/Go2Heart/ChatVID/assets/71871209/f696591e-0fb7-40c4-bc92-d221c3aa6ca5">
+
+<img width="1624" alt="image" src="https://github.com/Go2Heart/ChatVID/assets/71871209/92659f68-0a32-4c3e-979d-047b3a94de36">
+
 
 ## Install Instructions
 ```
