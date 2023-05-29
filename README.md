@@ -8,6 +8,13 @@
 Our ChatVID combines the understanding ability of Large Language Models([Vicuna](https://vicuna.lmsys.org) for current version) and the sensing ablity of Vision Models([BLIP2](https://blog.salesforceairesearch.com/blip-2/), [GRiT](https://github.com/JialianW/GRiT), [Vid2Seq](https://antoyang.github.io/vid2seq.html)) and Audio Models([Whisper](https://openai.com/research/whisper)). Altogether, they cooperate a powerful capability to bring users the experience to talk about anything in a video.
 
 
+## Highlights 🔥
+- 🔍 Leverage the power of Large Language Models, Vision Models, and Audio Models to enable conversations about videos.
+- 🤖 Utilize [Vicuna](https://vicuna.lmsys.org) as the Large Language Model for understanding user queries and responses.
+- 📷 Incorporate state-of-the-art Vision Models like [BLIP2](https://blog.salesforceairesearch.com/blip-2/), [GRiT](https://github.com/JialianW/GRiT), and [Vid2Seq](https://antoyang.github.io/vid2seq.html) for visual understanding and analysis.
+- 🎤 Employ [Whisper](https://openai.com/research/whisper) as an Audio Model to process audio content within videos.
+- 💬 Enable users to have conversations and discussions about any aspect of a video.
+- 🚀 Enhance the overall video-watching experience by providing an interactive and engaging platform.
 
 ## Gradio Example ✨
 <h1 align="center">
