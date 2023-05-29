@@ -4,6 +4,8 @@ Chat about anything on any video!
 ## 
 
 ## Gradio Example
+Video Quick View:
+[![The Temple Of Heaven](https://img.youtube.com/vi/9xLoyYY_5rc/0.jpg)](https://www.youtube.com/watch?v=9xLoyYY_5rc "The Temple Of Heaven")
 <img width="1637" alt="image" src="https://github.com/Go2Heart/ChatVID/assets/71871209/f696591e-0fb7-40c4-bc92-d221c3aa6ca5">
 
 <img width="1624" alt="image" src="https://github.com/Go2Heart/ChatVID/assets/71871209/92659f68-0a32-4c3e-979d-047b3a94de36">
@@ -58,7 +60,6 @@ Get the Vid2Seq ActivityNet [Checkpoints](https://storage.googleapis.com/scenic-
 
 
 ## Gradio WebUI Usage
-### Step I
 ```
 python demo.py --config config/debug.yaml
 ```
