@@ -4,10 +4,9 @@
  ChatVID 
 </h1>
 <h4 align="center">💬 Chat about anything on any video! 🎥</h4>
+Our ChatVID combines the understanding ability of Large Language Models and the sensing ablity of Vision Models and Audio Models. Altogether, they cooperate a powerful capability to bring users the experience to talk about anything in a video.
 
 
-
-## 
 
 ## Gradio Example ✨
 <h1 align="center">
@@ -25,7 +24,7 @@ pip install -r requirements.txt
 mim install mmengine mmcv mmaction2
 ```
 
-Install ffmpeg for Whisper. Note that if Whisper encounters permission errors, you may need to specify the DATA_GYM_CACHE_DIR to your writable cache directory.
+You will also need to install [ffmpeg](https://ffmpeg.org) for Whisper. Note that if Whisper encounters permission errors, you may need to specify the DATA_GYM_CACHE_DIR to your writable cache directory.
 <!-- # change the scenic/dataset_lib/video_ops.py and scenic/train_lib_deprecated/train_utils.py -->
 
 ## Setting Up Checkpoints 📦
