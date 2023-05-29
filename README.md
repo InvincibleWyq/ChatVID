@@ -1,6 +1,7 @@
 
 <h1 align="center">ChatVID 💬🎥</h1>
-Chat about anything on any video! 🎉
+<h4 align="center">Chat about anything on any video! 🎉</h4>
+
 
 ## 
 
