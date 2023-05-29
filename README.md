@@ -1,6 +1,7 @@
 
 <h1 align="center">
- <img src="https://github.com/Go2Heart/ChatVID/assets/71871209/006c4820-824b-4268-b035-102949af1739" height=200/><br>
+ <img src="https://github.com/Go2Heart/ChatVID/assets/71871209/006c4820-824b-4268-b035-102949af1739" height=320/><br>
+ ChatVID
 </h1>
 <h4 align="center">💬 Chat about anything on any video! 🎥</h4>
 
