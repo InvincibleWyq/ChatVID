@@ -60,6 +60,7 @@ class ScenicModel:
             platform.work_unit().create_artifact(platform.ArtifactType.DIRECTORY,
                                                 self.FLAGS.workdir, 'Workdir')
         self.FLAGS.config.dataset_configs.base_dir = self.FLAGS.data_dir
+        self.FLAGS.config.init_from.checkpoint_path = self.FLAGS.ckpt_dir
         rng = jax.random.PRNGKey(self.FLAGS.config.rng_seed)
         logging.info('RNG: %s', rng)
 
