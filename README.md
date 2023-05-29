@@ -1,6 +1,5 @@
 
-
-# ChatVID 💬🎥
+<h1 align="center">ChatVID 💬🎥</h1>
 Chat about anything on any video! 🎉
 
 ## 
@@ -55,9 +54,7 @@ Get the CLIP [Checkpoints](). Specify the `vid2seq.clip_path` in the [Infer Conf
 2. Prepare Vid2Seq ActivityNet Checkpoints
 Get the Vid2Seq ActivityNet [Checkpoints](https://storage.googleapis.com/scenic-bucket/vid2seq/anet-captions). And then rename it as `checkpoint_200000`. After that, change the `vid2seq.checkpoint_path` in the [Infer Config](https://github.com/Go2Heart/ChatVID/blob/master/config/infer.yaml) to the folder directory where contains the checkpoint.
 
-##
-
- Gradio WebUI Usage 🌐
+## Gradio WebUI Usage 🌐
 
 ```
 python demo.py --config config/infer.yaml
