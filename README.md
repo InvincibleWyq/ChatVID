@@ -19,11 +19,8 @@ Chat about anything on any video!
 pip install -r requirements.txt
 
 mim install mmengine mmcv mmaction2
-# Install ffmpeg for Whisper.
-# Note that if Whisper encounters permission errors, you may need to specify the DATA_GYM_CACHE_DIR to your writable cache directory.
-
-
 ```
+Install ffmpeg for Whisper.Note that if Whisper encounters permission errors, you may need to specify the DATA_GYM_CACHE_DIR to your writable cache directory.
 <!-- # change the scenic/dataset_lib/video_ops.py and scenic/train_lib_deprecated/train_utils.py -->
 
 ## Setting Up Checkpoints
