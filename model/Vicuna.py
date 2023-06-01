@@ -137,65 +137,6 @@ class VicunaChatBot:
         self.conv = conv_template.copy()
 
 
-def chat_loop(
-    model_path: str,
-    device: str,
-    num_gpus: str,
-    max_gpu_memory: str,
-    load_8bit: bool,
-    conv_template,
-    temperature: float,
-    max_new_tokens: int,
-    chatio: ChatIO,
-    debug: bool,
-):
-    # Model
-    model, tokenizer = load_model(model_path, device, num_gpus, max_gpu_memory,
-                                  load_8bit, debug)
-
-    # Chat
-    if conv_template:
-        conv = conv_template.copy()
-    else:
-        conv = get_default_conv_template(model_path).copy()
-
-    while True:
-        try:
-            inp = chatio.prompt_for_input(conv.roles[0])
-        except EOFError:
-            inp = ""
-        if not inp:
-            print("exit...")
-            break
-
-        conv.append_message(conv.roles[0], inp)
-        conv.append_message(conv.roles[1], None)
-
-        generate_stream_func = generate_stream
-        prompt = conv.get_prompt()
-
-        skip_echo_len = compute_skip_echo_len(model_path, conv, prompt)
-        stop_str = (
-            conv.sep if conv.sep_style
-            in [SeparatorStyle.SINGLE, SeparatorStyle.BAIZE] else None)
-
-        params = {
-            "model": model_path,
-            "prompt": prompt,
-            "temperature": temperature,
-            "max_new_tokens": max_new_tokens,
-            "stop": stop_str,
-        }
-
-        chatio.prompt_for_output(conv.roles[1])
-        output_stream = generate_stream_func(model, tokenizer, params, device)
-        outputs = chatio.stream_output(output_stream, skip_echo_len)
-        # NOTE: strip is important to align with the training data.
-        conv.messages[-1][-1] = outputs.strip()
-        if debug:
-            print("\n", {"prompt": prompt, "outputs": outputs}, "\n")
-
-
 class VicunaHandler:
     """ VicunaHandler is a class that handles the communication between the
     frontend and the backend. """
@@ -232,8 +173,7 @@ class VicunaHandler:
 
     def gr_chatbot_init(self, caption: str):
         """ Initialise the chatbot for gradio. """
-    
-        
+
         template = self._construct_conversation(caption)
         self.chatbot.change_conv_template_(template)
         print("Chatbot initialised.")
@@ -256,13 +196,14 @@ class VicunaHandler:
             "then answer my question based on your conclusion.\n" +\
             "<video begin>\n" + prompt + "<video end>\n" +\
             "Example: Is this a Video?"
-            
+
         user_message = user_message.strip()
-        
+
         print(user_message)
 
         return Conversation(
-            system="A chat between a curious user and an artificial intelligence assistant answering quetions on videos."
+            system=
+            "A chat between a curious user and an artificial intelligence assistant answering quetions on videos."
             "The assistant answers the questions based on the given video captions and speech in time order.",
             roles=("USER", "ASSISTANT"),
             messages=(("USER", user_message), ("ASSISTANT", "yes")),
