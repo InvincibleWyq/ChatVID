@@ -5,6 +5,13 @@
 </h1>
 <h4 align="center">💬 Chat about anything on any video! 🎥</h4>
 
+<p align="center">
+  <b>Authors:</b><br>
+  <b><a href="https://github.com/Go2Heart">Yibin Yan*</a></b>, Beijing University of Posts and Telecommunications<br>
+  <b><a href="https://github.com/InvincibleWyq">Yiqin Wang*</a></b>, Tsinghua University<br>
+  (* = equal contribution)
+</p>
+
 Our ChatVID combines the understanding ability of Large Language Models and the sensing ablity of Vision Models and Audio Models. Altogether, they form a powerful capability to bring users the experience to talk about anything in a video.
 
 
@@ -72,3 +79,7 @@ Get the Vid2Seq ActivityNet [Checkpoints](https://storage.googleapis.com/scenic-
 ```
 python demo.py --config config/infer.yaml
 ```
+
+## Demo 🤗
+
+Coming soon...
