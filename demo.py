@@ -81,11 +81,11 @@ if __name__ == '__main__':
 
         upload_button.click(
             lambda: gr.update(interactive=False), None, chat_button).then(
-                lambda: gr.update(visible=False), None, input).then(
+                lambda: gr.update(visible=False), None,
+                input).then(lambda: [], None, chatbot).then(
                     captioner.caption_video, [video_path, num_frames],
                     [captions]).then(lambda: gr.update(interactive=True), None,
-                                     chat_button).then(lambda: [], None,
-                                                       chatbot)
+                                     chat_button)
 
         chat_button.click(handler.gr_chatbot_init, [captions],
                           None).then(lambda: gr.update(visible=True), None,
