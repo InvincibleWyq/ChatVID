@@ -9,3 +9,5 @@ pretrained_models/
 *.log
 .vscode/*
 vid2seq_workdir/*
+*_ckpt/
+vicuna-*b/

@@ -26,11 +26,11 @@ Our ChatVID combines the understanding ability of Large Language Models and the 
 
 ## Gradio Example ✨
 <h1 align="center">
-<img src="https://github.com/Go2Heart/ChatVID/assets/71871209/346e5d92-9b64-48b6-8001-87e80386329a" alt="The Temple Of Heaven" class="center">
-<img src="https://github.com/Go2Heart/ChatVID/assets/71871209/aa96f310-83e7-4f7f-9458-9adb1019338f" alt="Cook" class="center">
+<img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/509aa0ce-233a-4418-b245-ebc52e7e9ad9" alt="The Temple Of Heaven" class="center">
+<img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/66d4aec8-a322-4cf2-ac74-9aad9fd89d16" alt="Cook" class="center">
 </h1>
-<img width="1624" alt="image" src="https://github.com/Go2Heart/ChatVID/assets/71871209/f696591e-0fb7-40c4-bc92-d221c3aa6ca5">
-<img width="1624" alt="image" src="https://github.com/Go2Heart/ChatVID/assets/71871209/92659f68-0a32-4c3e-979d-047b3a94de36">
+<img width="1624" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/b682bd98-5a6d-400d-9679-c80a258a76b5">
+<img width="1624" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/da9f79b7-8845-4e91-829e-c3c001d67294">
 
 ## Install Instructions 💻
 
@@ -47,7 +47,7 @@ You will also need to install [ffmpeg](https://ffmpeg.org) for Whisper. Note tha
 
 ### Grit Checkpoints 🚀
 
-Put [Grit](https://datarelease.blob.core.windows.net/grit/models/grit_b_densecap_objectdet.pth) into `pretrained_models` folder in the ChatVID's root folder.
+Put [Grit](https://datarelease.blob.core.windows.net/grit/models/grit_b_densecap_objectdet.pth) into `pretrained_models` folder.
 
 <!-- 
 ### BLIP2 Checkpoints
@@ -63,21 +63,48 @@ It will be acquired automatically using Hugging Face's transformers
 ### Vicuna Weights 🦙
 
 ChatVID uses frozen Vicuna 7B and 13B models. Please first follow the [instructions](https://github.com/lm-sys/FastChat) to prepare Vicuna v1.1 weights. 
-Then modify the `vicuna.model_path` in the [Infer Config](https://github.com/Go2Heart/ChatVID/blob/master/config/infer.yaml) to the folder that contains Vicuna weights.
+Then modify the `vicuna.model_path` in the [Infer Config](https://github.com/InvincibleWyq/ChatVID/blob/main/config/infer.yaml) to the folder that contains Vicuna weights.
 
 ### Vid2Seq Checkpoints 🎥📊
 
-1. Prepare CLIP first for feature extraction in Vid2Seq.
-Get the CLIP [Checkpoints](). Specify the `vid2seq.clip_path` in the [Infer Config](https://github.com/Go2Heart/ChatVID/blob/master/config/infer.yaml) to the checkpoint path. 
+1. Prepare CLIP ViT-L/14 Checkpoint for feature extraction in Vid2Seq.
+Get [CLIP ViT-L/14 Checkpoint](https://github.com/openai/CLIP/blob/main/clip/clip.py#L38). Specify the `vid2seq.clip_path` in the [Infer Config](https://github.com/InvincibleWyq/ChatVID/blob/main/config/infer.yaml) to the checkpoint path. 
 `vid2seq.output_path` is used to store the generated TFRecords and can be specified to any writable directory. 
 `vid2seq.work_dir` is the Flax's working directory and can be specified to any writable directory.
 
-2. Prepare Vid2Seq ActivityNet Checkpoints
-Get the Vid2Seq ActivityNet [Checkpoints](https://storage.googleapis.com/scenic-bucket/vid2seq/anet-captions). And then rename it as `checkpoint_200000`. After that, change the `vid2seq.checkpoint_path` in the [Infer Config](https://github.com/Go2Heart/ChatVID/blob/master/config/infer.yaml) to the folder directory where contains the checkpoint.
+2. Prepare Vid2Seq ActivityNet Checkpoint
+Get the [Vid2Seq ActivityNet Checkpoint](https://storage.googleapis.com/scenic-bucket/vid2seq/anet-captions). And then rename it as `checkpoint_200000`. After that, change the `vid2seq.checkpoint_path` in the [Infer Config](https://github.com/InvincibleWyq/ChatVID/blob/main/config/infer.yaml) to the folder directory where contains the checkpoint.
+
+### File Structure
+
+```txt
+ChatVID/
+|__config/
+    |__...
+|__model/
+    |__...
+|__scenic/
+    |__...
+|__pretrained_models/
+    |__grit_b_densecap_objectdet.pth
+|__vicuna-7b/
+    |__pytorch_model-00001-of-00002.bin
+    |__pytorch_model-00002-of-00002.bin
+    |__...
+|__vid2seq_ckpt/
+    |__checkpoint_200000
+|__clip_ckpt/
+    |__ViT-L-14.pt
+|__demo.py
+|__README.md
+|__requirements.txt
+|__LICENSE
+
+```
 
 ## Gradio WebUI Usage 🌐
 
-```
+```bash
 python demo.py --config config/infer.yaml
 ```
 
