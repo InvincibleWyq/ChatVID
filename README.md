@@ -22,6 +22,7 @@ Our ChatVID combines the understanding ability of Large Language Models and the 
 - 🎤 Employ [Whisper](https://openai.com/research/whisper) as an Audio Model to process audio content within videos.
 - 💬 Enable users to have conversations and discussions about any aspect of a video.
 - 🚀 Enhance the overall video-watching experience by providing an interactive and engaging platform.
+- 🚗 ChatVID with Vicuna-7B is able to run with a Nvidia GPU with 24G RAM.
 
 ## Gradio Example ✨
 <h1 align="center">
