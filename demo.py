@@ -40,7 +40,7 @@ if __name__ == '__main__':
     _args = _argparser.parse_args()
     config = get_config(_args.config_path)
 
-    captioner = Captioner(config)
+    captioner = Captioner(config)  # global
 
     global handler
     handler = VicunaHandler(config['vicuna'])
