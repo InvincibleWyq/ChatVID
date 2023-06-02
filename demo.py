@@ -5,8 +5,7 @@ import gradio as gr
 
 from config.config_utils import get_config
 from model import Captioner, VicunaHandler
-import os
-os.environ['DATA_GYM_CACHE_DIR']="/mnt/petrelfs/wangyiqin/.cache" # some writable directory
+
 
 def set_example_video(example: list) -> dict:
     return gr.Video.update(value=example[0])
@@ -41,7 +40,7 @@ if __name__ == '__main__':
     _args = _argparser.parse_args()
     config = get_config(_args.config_path)
 
-    captioner = Captioner(config)
+    captioner = Captioner(config)  # global
 
     global handler
     handler = VicunaHandler(config['vicuna'])
@@ -49,14 +48,15 @@ if __name__ == '__main__':
     with gr.Blocks(theme=gr.themes.Soft()) as demo:
         gr.Markdown("## <h1><center>ChatVID</center></h1>")
         gr.Markdown("""
-        Chat about any video with ChatVID! ChatVID is a video chatbot that can chat about any video.
+        ChatVID is a video chatbot that can chat about any video.
         """)
         with gr.Row():
             with gr.Column():
                 video_path = gr.Video(label="Video")
 
                 with gr.Column():
-                    upload_button = gr.Button("Begin Upload")
+                    upload_button = gr.Button(
+                        "Upload & Watch. (Click once and wait 3min )")
                     chat_button = gr.Button("Let's Chat!", interactive=False)
                     num_frames = gr.Slider(
                         minimum=5,
@@ -79,10 +79,13 @@ if __name__ == '__main__':
                     with gr.Column(scale=0.15, min_width=0):
                         clear_button = gr.Button("CLEAR")
 
-        upload_button.click(captioner.caption_video, [video_path, num_frames],
-                            [captions]).then(
-                                lambda: gr.update(interactive=True), None,
-                                chat_button).then(lambda: [], None, chatbot)
+        upload_button.click(
+            lambda: gr.update(interactive=False), None, chat_button).then(
+                lambda: gr.update(visible=False), None,
+                input).then(lambda: [], None, chatbot).then(
+                    captioner.caption_video, [video_path, num_frames],
+                    [captions]).then(lambda: gr.update(interactive=True), None,
+                                     chat_button)
 
         chat_button.click(handler.gr_chatbot_init, [captions],
                           None).then(lambda: gr.update(visible=True), None,

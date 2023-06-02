@@ -1,6 +1,6 @@
 
 <h1 align="center">
- <img src="https://github.com/Go2Heart/ChatVID/assets/71871209/006c4820-824b-4268-b035-102949af1739" height=320/><br>
+ <img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/1a7f47ca-ffbd-4720-b43a-4304fcaa8657" height=320/><br>
  ChatVID
 </h1>
 <h4 align="center">💬 Chat about anything on any video! 🎥</h4>
@@ -40,7 +40,7 @@ pip install -r requirements.txt
 mim install mmengine mmcv mmaction2
 ```
 
-You will also need to install [ffmpeg](https://ffmpeg.org) for Whisper. Note that if Whisper encounters permission errors, you may need to specify the `DATA_GYM_CACHE_DIR` to your writable cache directory.
+You will also need to install [ffmpeg](https://ffmpeg.org) for Whisper. Note that if Whisper encounters permission errors, you may need to specify environment variable `DATA_GYM_CACHE_DIR='/YourRootDir/ChatVID/.cache'`, a writable cache directory.
 <!-- # change the scenic/dataset_lib/video_ops.py and scenic/train_lib_deprecated/train_utils.py -->
 
 ## Setting Up Checkpoints 📦

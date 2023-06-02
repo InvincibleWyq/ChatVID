@@ -21,7 +21,7 @@ class Captioner:
             self.vid2seq_captioner = Vid2SeqCaptioner(config=config['vid2seq'])
 
         self.src_dir = ''
-    
+
     def debug_vid2seq(self, video_path, num_frames=8):
         return self.vid2seq_captioner(video_path=video_path)
 
@@ -39,7 +39,7 @@ class Captioner:
         ]
         for processor in video_processors:
             video_info = processor.transform(video_info)
-        
+
         timestamp_list = [
             round(i / video_info['avg_fps'], 1)
             for i in video_info['frame_inds']
@@ -51,7 +51,8 @@ class Captioner:
             vid2seq_captions = self.vid2seq_captioner(video_path=video_path)
         else:
             vid2seq_captions = []
-        try: speech = self.speech_recognizer(video_path)
+        try:
+            speech = self.speech_recognizer(video_path)
         except RuntimeError:
             speech = ""
 
@@ -67,5 +68,5 @@ class Captioner:
         for i in range(len(vid2seq_captions)):
             overall_captions += "You notice " + vid2seq_captions[i] + "\n"
         print("Captions generated")
-        
+
         return overall_captions

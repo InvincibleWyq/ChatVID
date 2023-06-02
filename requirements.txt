@@ -31,7 +31,6 @@ orbax
 dmvr @ git+https://github.com/deepmind/dmvr.git
 gin-config
 t5
-# t5x manually download
 six
 flax==0.5
 simclr

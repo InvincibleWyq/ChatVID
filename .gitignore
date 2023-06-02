@@ -3,11 +3,15 @@ __pycache__/
 *.py[cod]
 *$py.class
 **/*.pyc
-pretrained_models/
 
 *.pth
 *.log
 .vscode/*
+.cache/*
+
 vid2seq_workdir/*
+pretrained_models/
 *_ckpt/
 vicuna-*b/
+examples/
+config/local_infer.yaml
