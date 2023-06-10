@@ -31,8 +31,8 @@ Our ChatVID combines the understanding ability of Large Language Models and the 
 <img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/509aa0ce-233a-4418-b245-ebc52e7e9ad9" alt="The Temple Of Heaven" class="center">
 <img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/66d4aec8-a322-4cf2-ac74-9aad9fd89d16" alt="Cook" class="center">
 </h1>
-<img width="1200" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/b682bd98-5a6d-400d-9679-c80a258a76b5">
-<img width="1200" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/da9f79b7-8845-4e91-829e-c3c001d67294">
+<img width="1000" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/b682bd98-5a6d-400d-9679-c80a258a76b5">
+<img width="1000" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/da9f79b7-8845-4e91-829e-c3c001d67294">
 
 ## Install Instructions 💻
 
