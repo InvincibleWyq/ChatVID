@@ -7,9 +7,9 @@
 
 <p align="center">
   <b>Authors:</b><br>
-  <b><a href="https://github.com/Go2Heart">Yibin Yan#</a></b>, BUPT<br>
-  <b><a href="https://github.com/InvincibleWyq">Yiqin Wang#</a></b>, Tsinghua University<br>
-  <b><a herf="https://andytang15.github.io">Yansong Tang</a></b>, Tsinghua-Berkeley Shenzhen Institute<br>
+  <b><a href="https://github.com/Go2Heart"> Yibin Yan#</a></b>, BUPT<br>
+  <b><a href="https://github.com/InvincibleWyq"> Yiqin Wang#</a></b>, Tsinghua University<br>
+  <b><a herf="https://andytang15.github.io"> Yansong Tang</a></b>, Tsinghua-Berkeley Shenzhen Institute<br>
   (# = equal contribution, names listed alphabetically)<br>
   This work is done during Yibin and Yiqin's internship with Prof. Tang.
 </p>
