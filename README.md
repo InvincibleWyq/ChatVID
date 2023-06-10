@@ -7,9 +7,11 @@
 
 <p align="center">
   <b>Authors:</b><br>
-  <b><a href="https://github.com/Go2Heart">Yibin Yan*</a></b>, Beijing University of Posts and Telecommunications<br>
-  <b><a href="https://github.com/InvincibleWyq">Yiqin Wang*</a></b>, Tsinghua University<br>
-  (* = equal contribution)
+  <b><a href="https://github.com/Go2Heart">Yibin Yan#</a></b>, BUPT<br>
+  <b><a href="https://github.com/InvincibleWyq">Yiqin Wang#</a></b>, Tsinghua University<br>
+  <b><a herf="https://andytang15.github.io">Yansong Tang</a></b>, Tsinghua-Berkeley Shenzhen Institute<br>
+  (# = equal contribution, names listed alphabetically)<br>
+  This work is done during Yibin and Yiqin's internship with Prof. Tang.
 </p>
 
 Our ChatVID combines the understanding ability of Large Language Models and the sensing ablity of Vision Models and Audio Models. Altogether, they form a powerful capability to bring users the experience to talk about anything in a video.
@@ -73,7 +75,7 @@ Get [CLIP ViT-L/14 Checkpoint](https://github.com/openai/CLIP/blob/main/clip/cli
 `vid2seq.work_dir` is the Flax's working directory and can be specified to any writable directory.
 
 2. Prepare Vid2Seq ActivityNet Checkpoint
-Get the [Vid2Seq ActivityNet Checkpoint](https://storage.googleapis.com/scenic-bucket/vid2seq/anet-captions). And then rename it as `checkpoint_200000`. After that, change the `vid2seq.checkpoint_path` in the [Infer Config](https://github.com/InvincibleWyq/ChatVID/blob/main/config/infer.yaml) to the folder directory where contains the checkpoint.
+Get the [Vid2Seq ActivityNet Checkpoint](https://storage.googleapis.com/scenic-bucket/vid2seq/anet-captions). And then rename it as `checkpoint_200001`. After that, change the `vid2seq.checkpoint_path` in the [Infer Config](https://github.com/InvincibleWyq/ChatVID/blob/main/config/infer.yaml) to the folder directory where contains the checkpoint.
 
 ### File Structure
 
@@ -92,7 +94,7 @@ ChatVID/
     |__pytorch_model-00002-of-00002.bin
     |__...
 |__vid2seq_ckpt/
-    |__checkpoint_200000
+    |__checkpoint_200001
 |__clip_ckpt/
     |__ViT-L-14.pt
 |__demo.py
