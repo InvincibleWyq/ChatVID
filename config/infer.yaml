@@ -1,7 +1,7 @@
 device: 'cuda'
 
 vicuna:
-  model_path: '/mnt/petrelfs/wangyiqin/vid_cap/ChatVID_huggingface/vicuna-7b'
+  model_path: '/YourRootDir/ChatVID/vicuna-7b'
   device: 'cuda'
   num_gpus: 'auto'
   max_gpu_memory: '24Gib'
@@ -10,12 +10,12 @@ vicuna:
   temperature: 1.0
   max_new_tokens: 512
   debug: False
-  output_path: '/mnt/petrelfs/wangyiqin/vid_cap/ChatVID/examples/vicuna_out.json'
+  output_path: '/YourRootDir/ChatVID/examples/vicuna_out.json'
 
 vid2seq:
-  enable: False # vid2Seq only use cpu, if you have cpu ram shortage, set to False.
-  clip_path: '/mnt/petrelfs/wangyiqin/vid_cap/ChatVID/clip_ckpt/ViT-L-14.pt'
-  output_path: '/mnt/petrelfs/wangyiqin/vid_cap/ChatVID/examples/'
+  enable: True # vid2Seq only use cpu, if you have cpu ram shortage, set to False.
+  clip_path: '/YourRootDir/ChatVID/clip_ckpt/ViT-L-14.pt'
+  output_path: '/YourRootDir/ChatVID/examples/'
   work_dir: 'vid2seq_workdir'
   config_path: 'config/vid2seq_config.py'
-  checkpoint_path: '/mnt/petrelfs/wangyiqin/vid_cap/ChatVID/vid2seq_ckpt' #only folder name
+  checkpoint_path: '/YourRootDir/ChatVID/vid2seq_ckpt' #only folder name
