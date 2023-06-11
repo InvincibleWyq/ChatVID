@@ -11,9 +11,9 @@ class ImageCaptioner:
         else:
             self.data_type = torch.float16
         self.processor = Blip2Processor.from_pretrained(
-            "/mnt/petrelfs/wangyiqin/vid_cap/ChatVID_huggingface/pretrained_models/blip2-opt-2.7b")
+            "Salesforce/blip2-opt-2.7b")
         self.model = Blip2ForConditionalGeneration.from_pretrained(
-            "/mnt/petrelfs/wangyiqin/vid_cap/ChatVID_huggingface/pretrained_models/blip2-opt-2.7b",
+            "Salesforce/blip2-opt-2.7b",
             torch_dtype=self.data_type, device_map="auto")
 
     def __call__(self, imgs):
