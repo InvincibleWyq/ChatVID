@@ -16,6 +16,7 @@
 
 Our ChatVID combines the understanding ability of Large Language Models and the sensing ablity of Vision Models and Audio Models. Altogether, they form a powerful capability to bring users the experience to talk about anything in a video.
 
+## Try out our demo🤗 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Yiqin/ChatVID)
 
 ## Highlights 🔥
 - 🔍 Leverage the power of Large Language Models, Vision Models, and Audio Models to enable conversations about videos.
@@ -103,10 +104,6 @@ ChatVID/
 # change all the abs path in config/infer.yaml
 python app.py
 ```
-
-## Demo 🤗
-
-Coming soon...
 
 ## Acknowledgment
 
