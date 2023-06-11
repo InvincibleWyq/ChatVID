@@ -10,8 +10,8 @@
   <b><a href="https://github.com/Go2Heart">Yibin Yan🤝💼</a></b>, BUPT &nbsp;&nbsp;
   <b><a href="https://github.com/InvincibleWyq">Yiqin Wang🤝💼</a></b>, Tsinghua University<br>
   <b><a href="https://andytang15.github.io">Yansong Tang</a></b>, Tsinghua-Berkeley Shenzhen Institute<br>
-  (🤝 = equal contribution, names listed alphabetically&nbsp;&nbsp;💼 = looking for internship opportunities)<br>
-  This work is done during Yibin and Yiqin's internship with <b><a href="https://andytang15.github.io">Prof. Tang.</a></b>
+  <small>(🤝 = equal contribution, names listed alphabetically&nbsp;&nbsp;💼 = looking for internship opportunities)</small><br>
+  <small>This work is done during Yibin and Yiqin's internship with <b><a href="https://andytang15.github.io">Prof. Tang.</a></b></small>
 </p>
 
 Our ChatVID combines the understanding ability of Large Language Models and the sensing ablity of Vision Models and Audio Models. 
