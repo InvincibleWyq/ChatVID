@@ -24,7 +24,8 @@ Our ChatVID combines the understanding ability of Large Language Models and the 
 - 🎤 Employ [Whisper](https://openai.com/research/whisper) as an Audio Model to process audio content within videos.
 - 💬 Enable users to have conversations and discussions about any aspect of a video.
 - 🚀 Enhance the overall video-watching experience by providing an interactive and engaging platform.
-- 🚗 ChatVID with Vicuna-7B (8bit) is able to run with a Nvidia GPU with 24G RAM.
+- 🚗 ChatVID with Vicuna-7B (8bit) is able to run with a Nvidia GPU with 24G RAM, and 8G CPU RAM.
+- 🎥 ChatVID needs an extra 10G CPU RAM when using Vid2Seq.
 
 ## Gradio Example ✨
 <h1 align="center">
@@ -36,10 +37,10 @@ Our ChatVID combines the understanding ability of Large Language Models and the 
 
 ## Install Instructions 💻
 
-```
+```bash
+pip install -r pre-requirements.txt
 pip install -r requirements.txt
-
-mim install mmengine mmcv mmaction2
+pip install -r extra-requirements.txt # optional, only for vid2seq
 ```
 
 You will also need to install [ffmpeg](https://ffmpeg.org) for Whisper. Note that if Whisper encounters permission errors, you may need to specify environment variable `DATA_GYM_CACHE_DIR='/YourRootDir/ChatVID/.cache'`, a writable cache directory.
@@ -67,7 +68,7 @@ It will be acquired automatically using Hugging Face's transformers
 ChatVID uses frozen Vicuna 7B and 13B models. Please first follow the [instructions](https://github.com/lm-sys/FastChat) to prepare Vicuna v1.1 weights. 
 Then modify the `vicuna.model_path` in the [Infer Config](https://github.com/InvincibleWyq/ChatVID/blob/main/config/infer.yaml) to the folder that contains Vicuna weights.
 
-### Vid2Seq Checkpoints 🎥📊
+### Vid2Seq Checkpoints (Optional) 🎥📊
 
 1. Prepare CLIP ViT-L/14 Checkpoint for feature extraction in Vid2Seq.
 Get [CLIP ViT-L/14 Checkpoint](https://github.com/openai/CLIP/blob/main/clip/clip.py#L38). Specify the `vid2seq.clip_path` in the [Infer Config](https://github.com/InvincibleWyq/ChatVID/blob/main/config/infer.yaml) to the checkpoint path. 
@@ -107,7 +108,8 @@ ChatVID/
 ## Gradio WebUI Usage 🌐
 
 ```bash
-python demo.py --config config/infer.yaml
+# change all the abs path in config/infer.yaml
+python app.py
 ```
 
 ## Demo 🤗

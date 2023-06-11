@@ -3,7 +3,7 @@ device: 'cuda'
 vicuna:
   model_path: '/YourRootDir/ChatVID/vicuna-7b'
   device: 'cuda'
-  num_gpus: 1
+  num_gpus: 'auto'
   max_gpu_memory: '24Gib'
   load_8bit: True
   conv_template: 
@@ -13,7 +13,7 @@ vicuna:
   output_path: '/YourRootDir/ChatVID/examples/vicuna_out.json'
 
 vid2seq:
-  enable: True
+  enable: True # vid2Seq only use cpu, if you have cpu ram shortage, set to False.
   clip_path: '/YourRootDir/ChatVID/clip_ckpt/ViT-L-14.pt'
   output_path: '/YourRootDir/ChatVID/examples/'
   work_dir: 'vid2seq_workdir'

@@ -80,6 +80,9 @@ def load_model(
         kwargs = {}
     elif device == "cuda":
         kwargs = {"torch_dtype": torch.float16}
+        if load_8bit:
+            kwargs = {"load_in_8bit": True}
+
         if num_gpus == "auto":
             kwargs["device_map"] = "auto"
         else:
@@ -134,8 +137,8 @@ def load_model(
         )
         raise_warning_for_old_weights(model_path, model)
 
-    if load_8bit:
-        compress_module(model, device)
+    # if load_8bit:
+    #     compress_module(model, device)
 
     if (device == "cuda" and num_gpus == 1) or device == "mps":
         model.to(device)

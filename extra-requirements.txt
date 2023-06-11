@@ -1,0 +1,16 @@
+jsonschema
+entrypoints
+nltk
+git+https://github.com/openai/CLIP.git
+ftfy 
+protobuf==3.20.3
+jestimator
+orbax
+dmvr @ git+https://github.com/deepmind/dmvr.git
+gin-config
+t5
+six
+flax==0.5
+jax==0.4.9
+jaxlib==0.4.9
+tf-models-official
