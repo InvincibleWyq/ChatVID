@@ -7,14 +7,16 @@
 
 <p align="center">
   <b>Authors:</b><br>
-  <b><a href="https://github.com/Go2Heart">Yibin Yan#</a></b>, BUPT &nbsp;&nbsp;
-  <b><a href="https://github.com/InvincibleWyq">Yiqin Wang#</a></b>, Tsinghua University<br>
+  <b><a href="https://github.com/Go2Heart">Yibin Yan🤝💼</a></b>, BUPT &nbsp;&nbsp;
+  <b><a href="https://github.com/InvincibleWyq">Yiqin Wang🤝💼</a></b>, Tsinghua University<br>
   <b><a href="https://andytang15.github.io">Yansong Tang</a></b>, Tsinghua-Berkeley Shenzhen Institute<br>
-  (# = equal contribution, names listed alphabetically)<br>
-  This work is done during Yibin and Yiqin's internship with Prof. Tang.
+  (🤝 = equal contribution, names listed alphabetically&nbsp;&nbsp;💼 = looking for internship opportunities)<br>
+  This work is done during Yibin and Yiqin's internship with <b><a href="https://andytang15.github.io">Prof. Tang.</a></b>
 </p>
 
-Our ChatVID combines the understanding ability of Large Language Models and the sensing ablity of Vision Models and Audio Models. Altogether, they form a powerful capability to bring users the experience to talk about anything in a video.
+Our ChatVID combines the understanding ability of Large Language Models and the sensing ablity of Vision Models and Audio Models. 
+Altogether, they form a powerful capability to bring users the experience to talk about anything in a video. 
+For any questions or suggestions, feel free to drop Yiqin an email at <a href="mailto:wyq1217@outlook.com">wyq1217@outlook.com</a> or open an issue.
 
 ## Try out our demo🤗 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Yiqin/ChatVID)
 
