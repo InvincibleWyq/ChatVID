@@ -44,24 +44,12 @@ pip install -r extra-requirements.txt # optional, only for vid2seq
 ```
 
 You will also need to install [ffmpeg](https://ffmpeg.org) for Whisper. Note that if Whisper encounters permission errors, you may need to specify environment variable `DATA_GYM_CACHE_DIR='/YourRootDir/ChatVID/.cache'`, a writable cache directory.
-<!-- # change the scenic/dataset_lib/video_ops.py and scenic/train_lib_deprecated/train_utils.py -->
 
 ## Setting Up Checkpoints 📦
 
 ### Grit Checkpoints 🚀
 
 Put [Grit](https://datarelease.blob.core.windows.net/grit/models/grit_b_densecap_objectdet.pth) into `pretrained_models` folder.
-
-<!-- 
-### BLIP2 Checkpoints
-```
-It will be acquired automatically using Hugging Face's transformers
-```
-### Whisper Checkpoints
-```
-
-```
- -->
 
 ### Vicuna Weights 🦙
 
@@ -88,6 +76,8 @@ ChatVID/
     |__...
 |__scenic/
     |__...
+|__simclr/
+    |__...
 |__pretrained_models/
     |__grit_b_densecap_objectdet.pth
 |__vicuna-7b/
@@ -98,9 +88,11 @@ ChatVID/
     |__checkpoint_200001
 |__clip_ckpt/
     |__ViT-L-14.pt
-|__demo.py
+|__app.py
 |__README.md
+|__pre-requirements.txt
 |__requirements.txt
+|__extra-requirements.txt
 |__LICENSE
 
 ```
