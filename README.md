@@ -22,9 +22,11 @@
 
 ⭐ Please give us a Star! For any questions or suggestions, feel free to drop Yiqin an email at <a href="mailto:wyq1217@outlook.com">wyq1217@outlook.com</a> or open an issue.
 
+
 ## Try our demo🤗 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Yiqin/ChatVID)
 
 You may use your own video, or download demo videos from [examples](./examples/) folder.
+
 
 ## Highlights 🔥
 - 🔍 Leverage the power of Large Language Models, Vision Models, and Audio Models to enable conversations about videos.
@@ -36,6 +38,7 @@ You may use your own video, or download demo videos from [examples](./examples/)
 - 🚗 ChatVID with Vicuna-7B (8bit) is able to run with a Nvidia GPU with 24G RAM, and 8G CPU RAM.
 - 🎥 ChatVID needs an extra 10G CPU RAM when using Vid2Seq.
 
+
 ## Gradio Example ✨
 <h1 align="center">
 <img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/509aa0ce-233a-4418-b245-ebc52e7e9ad9" alt="The Temple Of Heaven" class="center">
@@ -43,6 +46,7 @@ You may use your own video, or download demo videos from [examples](./examples/)
 </h1>
 <h1 align="center"><img width="750" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/b682bd98-5a6d-400d-9679-c80a258a76b5"></h1>
 <h1 align="center"><img width="750" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/ebd69990-a974-4094-912b-1a4c9681dcc2"></h1>
+
 
 ## Install Instructions 💻
 
@@ -53,6 +57,7 @@ pip install -r extra-requirements.txt # optional, only for vid2seq
 ```
 
 You will also need to install [ffmpeg](https://ffmpeg.org) for Whisper. Note that if Whisper encounters permission errors, you may need to specify environment variable `DATA_GYM_CACHE_DIR='/YourRootDir/ChatVID/.cache'`, a writable cache directory.
+
 
 ## Setting Up Checkpoints 📦
 
@@ -106,12 +111,14 @@ ChatVID/
 
 ```
 
+
 ## Gradio WebUI Usage 🌐
 
 ```bash
 # change all the abs path in config/infer.yaml
 python app.py
 ```
+
 
 ## Acknowledgment
 
