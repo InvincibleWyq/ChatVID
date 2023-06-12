@@ -13,5 +13,4 @@ vid2seq_workdir/*
 pretrained_models/
 *_ckpt/
 vicuna-*b/
-examples/
 config/local_infer.yaml

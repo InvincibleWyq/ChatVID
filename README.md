@@ -20,6 +20,8 @@ For any questions or suggestions, feel free to drop Yiqin an email at <a href="m
 
 ## Try out our demo🤗 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Yiqin/ChatVID)
 
+You may use your own video, or download our demo videos from examples folder.
+
 ## Highlights 🔥
 - 🔍 Leverage the power of Large Language Models, Vision Models, and Audio Models to enable conversations about videos.
 - 🤖 Utilize [Vicuna](https://vicuna.lmsys.org) as the Large Language Model for understanding user queries and responses.
