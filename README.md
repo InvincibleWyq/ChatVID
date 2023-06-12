@@ -14,13 +14,17 @@
   <small>This work is done during Yibin and Yiqin's internship with <b><a href="https://andytang15.github.io">Prof. Tang.</a></b></small>
 </p>
 
-Our ChatVID combines the understanding ability of Large Language Models and the sensing ablity of Vision Models and Audio Models. 
-Altogether, they form a powerful capability to bring users the experience to talk about anything in a video. 
-For any questions or suggestions, feel free to drop Yiqin an email at <a href="mailto:wyq1217@outlook.com">wyq1217@outlook.com</a> or open an issue.
+## Intro to ChatVID <img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/1a7f47ca-ffbd-4720-b43a-4304fcaa8657" height=50/>
 
-## Try out our demo🤗 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Yiqin/ChatVID)
+⭐ ChatVID combines the knowledge from Large Language Models and the sensing ablity of Vision Models and Audio Models.
 
-You may use your own video, or download our demo videos from examples folder.
+⭐ ChatVID demonstrate a powerful capability to talk about anything in the video.
+
+⭐ Please give us a Star! For any questions or suggestions, feel free to drop Yiqin an email at <a href="mailto:wyq1217@outlook.com">wyq1217@outlook.com</a> or open an issue.
+
+## Try our demo🤗 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Yiqin/ChatVID)
+
+You may use your own video, or download demo videos from [examples](./examples/) folder.
 
 ## Highlights 🔥
 - 🔍 Leverage the power of Large Language Models, Vision Models, and Audio Models to enable conversations about videos.
