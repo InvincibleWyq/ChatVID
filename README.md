@@ -16,6 +16,7 @@
 
 ## Try our demo🤗 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Yiqin/ChatVID)
 
+The demo will be asleep after 15min of inavtivity. Wake it up and wait for 10min, it will build itself again.
 
 ## Intro to ChatVID <img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/1a7f47ca-ffbd-4720-b43a-4304fcaa8657" height=50/>
 
@@ -42,8 +43,8 @@
 <img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/509aa0ce-233a-4418-b245-ebc52e7e9ad9" alt="The Temple Of Heaven" class="center">
 <img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/66d4aec8-a322-4cf2-ac74-9aad9fd89d16" alt="Cook" class="center">
 </h1>
-<h1 align="center"><img width="750" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/b682bd98-5a6d-400d-9679-c80a258a76b5"></h1>
-<h1 align="center"><img width="750" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/ebd69990-a974-4094-912b-1a4c9681dcc2"></h1>
+<h1 align="center"><img width="750" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/25438082-8873-4bfc-bd08-427c89dff605"></h1>
+<h1 align="center"><img width="750" alt="image" src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/56694937-63da-446e-ad8e-766d5840f4d4"></h1>
 
 
 ## Install Instructions 💻

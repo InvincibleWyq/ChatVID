@@ -15,7 +15,7 @@ def clear_chat(conv_template):
 
 
 def clear_four():
-    return [], [], [], []
+    return [], "", "", ""
 
 
 def respond(input, chat_history, conv):
@@ -31,9 +31,7 @@ captioner = Captioner(config)
 handler = VicunaHandler(config['vicuna'])
 
 with gr.Blocks(theme=gr.themes.Soft()) as demo:
-    gr.Markdown(
-        "## <h1><center><img src='https://github.com/InvincibleWyq/ChatVID/assets/37479394/1a7f47ca-ffbd-4720-b43a-4304fcaa8657' height=40/> ChatVID</center></h1>"
-    )
+    gr.Markdown("## <h1><center>ChatVID</center></h1>")
     gr.Markdown("""🔥 [ChatVID](https://github.com/InvincibleWyq/ChatVID) is a
     video chatbot. Please give us a ⭐ Star!""")
     gr.Markdown("""🎥 You may use the example video by clicking it.""")
