@@ -94,19 +94,6 @@ class VicunaHandler:
 
     def chat(self):
         """ Chat with the Vicuna. """
-        # template = self._construct_conversation("")
-        # chat_loop(
-        #     self.config['model_path'],
-        #     self.config['device'],
-        #     self.config['num_gpus'],
-        #     self.config['max_gpu_memory'],
-        #     self.config['load_8bit'],
-        #     template,
-        #     self.config['temperature'],
-        #     self.config['max_new_tokens'],
-        #     self.chat_io,
-        #     self.config['debug'],
-        # )
         pass
 
     def gr_chatbot_init(self, caption: str):
@@ -115,8 +102,6 @@ class VicunaHandler:
         template = self._construct_conversation(caption)
         print("Chatbot initialised.")
         return template.copy(), template.copy()
-        # self.chatbot.change_conv_template_(template)
-        print("Chatbot initialised.")
 
     def gr_chat(self, inp, conv: Conversation):
         """ Chat using gradio as the frontend. """
