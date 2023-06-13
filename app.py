@@ -39,8 +39,8 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
     gr.Markdown("""🎥 You may use the example video by clicking it.""")
     gr.Markdown("""🚀 For any questions or suggestions, feel free to drop Yiqin
     an email at <a href="mailto:wyq1217@outlook.com">wyq1217@outlook.com</a>
-    or open an issue.
-    """)
+    or open an issue.""")
+
     with gr.Row():
         with gr.Column():
             video_path = gr.Video(label="Video")

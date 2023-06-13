@@ -16,8 +16,6 @@
 
 ## Try our demo🤗 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Yiqin/ChatVID)
 
-You may use your own video, or download demo videos from [examples](./examples/) folder.
-
 
 ## Intro to ChatVID <img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/1a7f47ca-ffbd-4720-b43a-4304fcaa8657" height=50/>
 
