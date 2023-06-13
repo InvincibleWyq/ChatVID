@@ -14,3 +14,4 @@ pretrained_models/
 *_ckpt/
 vicuna-*b/
 config/local_infer.yaml
+gradio_cached_examples/

@@ -14,7 +14,8 @@ class ImageCaptioner:
             "Salesforce/blip2-opt-2.7b")
         self.model = Blip2ForConditionalGeneration.from_pretrained(
             "Salesforce/blip2-opt-2.7b",
-            torch_dtype=self.data_type, device_map="auto")
+            torch_dtype=self.data_type,
+            device_map="auto")
 
     def __call__(self, imgs):
         inputs = self.processor(

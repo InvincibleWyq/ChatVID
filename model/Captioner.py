@@ -1,5 +1,6 @@
-from mmaction.datasets.transforms import (DecordInit, SampleFrames, Resize,
-                                          FormatShape, DecordDecode)
+from mmaction.datasets.transforms import (DecordDecode, DecordInit,
+                                          FormatShape, Resize, SampleFrames)
+
 from model.audio import SpeechRecognizer
 from model.vision import DenseCaptioner, ImageCaptioner, Vid2SeqCaptioner
 

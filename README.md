@@ -122,4 +122,4 @@ python app.py
 
 ## Acknowledgment
 
-This work is based on [Vicuna](https://github.com/lm-sys/FastChat), [BLIP-2](https://huggingface.co/spaces/Salesforce/BLIP2), [GRiT](https://github.com/JialianW/GRiT), [Vid2Seq](https://github.com/google-research/scenic/tree/main/scenic/projects/vid2seq), [Whisper](https://github.com/openai/whisper).
+This work is based on [Vicuna](https://github.com/lm-sys/FastChat), [BLIP-2](https://huggingface.co/spaces/Salesforce/BLIP2), [GRiT](https://github.com/JialianW/GRiT), [Vid2Seq](https://github.com/google-research/scenic/tree/main/scenic/projects/vid2seq), [Whisper](https://github.com/openai/whisper). Thanks for their great work!

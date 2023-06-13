@@ -1,8 +1,6 @@
 from model.fastchat.conversation import (Conversation, SeparatorStyle,
-                                         compute_skip_echo_len,
-                                         get_default_conv_template)
-from model.fastchat.serve.inference import (ChatIO, chat_loop, generate_stream,
-                                            load_model)
+                                         compute_skip_echo_len)
+from model.fastchat.serve.inference import ChatIO, generate_stream, load_model
 
 
 class SimpleChatIO(ChatIO):
@@ -35,7 +33,6 @@ class VicunaChatBot:
         num_gpus: str,
         max_gpu_memory: str,
         load_8bit: bool,
-        conv_template,
         ChatIO: ChatIO,
         debug: bool,
     ):
@@ -48,25 +45,18 @@ class VicunaChatBot:
                                                 num_gpus, max_gpu_memory,
                                                 load_8bit, debug)
 
-        if conv_template:
-            self.conv = conv_template.copy()
-        else:
-            self.conv = get_default_conv_template(model_path).copy()
-
-        self.conv_template = self.conv.copy()
-
-    def chat(self, inp: str, temperature: float, max_new_tokens: int):
+    def chat(self, inp: str, temperature: float, max_new_tokens: int,
+             conv: Conversation):
         """ Vicuna as a chatbot. """
-        self.conv.append_message(self.conv.roles[0], inp)
-        self.conv.append_message(self.conv.roles[1], None)
+        conv.append_message(conv.roles[0], inp)
+        conv.append_message(conv.roles[1], None)
 
         generate_stream_func = generate_stream
-        prompt = self.conv.get_prompt()
+        prompt = conv.get_prompt()
 
-        skip_echo_len = compute_skip_echo_len(self.model_path, self.conv,
-                                              prompt)
+        skip_echo_len = compute_skip_echo_len(self.model_path, conv, prompt)
         stop_str = (
-            self.conv.sep if self.conv.sep_style
+            conv.sep if conv.sep_style
             in [SeparatorStyle.SINGLE, SeparatorStyle.BAIZE] else None)
         params = {
             "model": self.model_path,
@@ -76,65 +66,13 @@ class VicunaChatBot:
             "stop": stop_str,
         }
         print(prompt)
-        self.chatio.prompt_for_output(self.conv.roles[1])
+        self.chatio.prompt_for_output(conv.roles[1])
         output_stream = generate_stream_func(self.model, self.tokenizer,
                                              params, self.device)
         outputs = self.chatio.stream_output(output_stream, skip_echo_len)
         # NOTE: strip is important to align with the training data.
-        self.conv.messages[-1][-1] = outputs.strip()
-        return outputs
-
-    def summarise(self, caption: dict, temperature: float,
-                  max_new_tokens: int):
-        """ Vicuna as a summariser. """
-        questions = caption
-        captions = {}
-        for id, question in questions.items():
-            # Reset the conversation for each iteration
-            self.conv = get_default_conv_template(self.model_path).copy()
-            self.conv.append_message(self.conv.roles[0], question)
-            self.conv.append_message(self.conv.roles[1], None)
-
-            generate_stream_func = generate_stream
-            prompt = self.conv.get_prompt()
-
-            skip_echo_len = compute_skip_echo_len(self.model_path, self.conv,
-                                                  prompt)
-            stop_str = (
-                self.conv.sep if self.conv.sep_style
-                in [SeparatorStyle.SINGLE, SeparatorStyle.BAIZE] else None)
-
-            params = {
-                "model": self.model_path,
-                "prompt": prompt,
-                "temperature": temperature,
-                "max_new_tokens": max_new_tokens,
-                "stop": stop_str,
-            }
-
-            self.chatio.prompt_for_output(self.conv.roles[1])
-            output_stream = generate_stream_func(self.model, self.tokenizer,
-                                                 params, self.device)
-            outputs = self.chatio.stream_output(output_stream, skip_echo_len)
-            captions[id] = outputs
-
-            if self.debug:
-                print("\n", {"prompt": prompt, "outputs": outputs}, "\n")
-
-        print(captions)
-        return captions
-
-    def clear_conv_(self):
-        """ Clear the conversation. """
-        self.conv = self.conv_template.copy()
-
-    def change_conv_template_(self, conv_template):
-        self.conv_template = conv_template.copy()
-        self.conv = conv_template.copy()
-
-    def change_conv_(self, conv_template):
-        """ Change the conversation. """
-        self.conv = conv_template.copy()
+        conv.messages[-1][-1] = outputs.strip()
+        return outputs, conv
 
 
 class VicunaHandler:
@@ -150,38 +88,40 @@ class VicunaHandler:
             self.config['num_gpus'],
             self.config['max_gpu_memory'],
             self.config['load_8bit'],
-            None,
             self.chat_io,
             self.config['debug'],
         )
 
     def chat(self):
         """ Chat with the Vicuna. """
-        template = self._construct_conversation("")
-        chat_loop(
-            self.config['model_path'],
-            self.config['device'],
-            self.config['num_gpus'],
-            self.config['max_gpu_memory'],
-            self.config['load_8bit'],
-            template,
-            self.config['temperature'],
-            self.config['max_new_tokens'],
-            self.chat_io,
-            self.config['debug'],
-        )
+        # template = self._construct_conversation("")
+        # chat_loop(
+        #     self.config['model_path'],
+        #     self.config['device'],
+        #     self.config['num_gpus'],
+        #     self.config['max_gpu_memory'],
+        #     self.config['load_8bit'],
+        #     template,
+        #     self.config['temperature'],
+        #     self.config['max_new_tokens'],
+        #     self.chat_io,
+        #     self.config['debug'],
+        # )
+        pass
 
     def gr_chatbot_init(self, caption: str):
         """ Initialise the chatbot for gradio. """
 
         template = self._construct_conversation(caption)
-        self.chatbot.change_conv_template_(template)
+        print("Chatbot initialised.")
+        return template.copy(), template.copy()
+        # self.chatbot.change_conv_template_(template)
         print("Chatbot initialised.")
 
-    def gr_chat(self, inp):
+    def gr_chat(self, inp, conv: Conversation):
         """ Chat using gradio as the frontend. """
         return self.chatbot.chat(inp, self.config['temperature'],
-                                 self.config['max_new_tokens'])
+                                 self.config['max_new_tokens'], conv)
 
     def _construct_conversation(self, prompt):
         """ Construct a conversation template.
