@@ -7,10 +7,10 @@
 
 <p align="center">
   <b>Authors:</b><br>
-  <b><a href="https://github.com/Go2Heart">Yibin Yan🤝💼</a></b>, BUPT &nbsp;&nbsp;
-  <b><a href="https://github.com/InvincibleWyq">Yiqin Wang🤝💼</a></b>, Tsinghua University<br>
+  <b><a href="https://github.com/Go2Heart">Yibin Yan🤝</a></b>, BUPT &nbsp;&nbsp;
+  <b><a href="https://github.com/InvincibleWyq">Yiqin Wang🤝</a></b>, Tsinghua University<br>
   <b><a href="https://andytang15.github.io">Yansong Tang</a></b>, Tsinghua-Berkeley Shenzhen Institute<br>
-  <small>(🤝 = equal contribution, names listed alphabetically&nbsp;&nbsp;💼 = looking for internship opportunities)</small><br>
+  <small>(🤝 = equal contribution, names listed alphabetically)</small><br>
   <small>This work is done during Yibin and Yiqin's internship with <b><a href="https://andytang15.github.io">Prof. Tang.</a></b></small>
 </p>
 
@@ -58,7 +58,7 @@ pip install -r extra-requirements.txt # optional, only for vid2seq
 You will also need to install [ffmpeg](https://ffmpeg.org) for Whisper. Note that if Whisper encounters permission errors, you may need to specify environment variable `DATA_GYM_CACHE_DIR='/YourRootDir/ChatVID/.cache'`, a writable cache directory.
 
 
-## Setting Up Checkpoints 📦
+## Setting Up Checkpoints 📦💼
 
 ### Grit Checkpoints 🚀
 
