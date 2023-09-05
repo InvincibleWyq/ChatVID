@@ -16,7 +16,7 @@
 
 ## Try our demo🤗 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Yiqin/ChatVID)
 
-The demo will be asleep after 15min of inavtivity. Wake it up and wait for 10min, it will build itself again.
+The demo is now paused. If you do want to try it out, you can reach out Yiqin with wyq1217@outlook.com
 
 ## Intro to ChatVID <img src="https://github.com/InvincibleWyq/ChatVID/assets/37479394/1a7f47ca-ffbd-4720-b43a-4304fcaa8657" height=50/>
 
